@@ -7,7 +7,7 @@ Getting Started
 ----------------------------------------------------------------------------------------------------
 
 - Install perangkat lunak 
-   + `git <(https://git-scm.com/download/win)>`_ 
+   + `git <https://git-scm.com/download/win>`_ 
    + `git extensions <https://gitextensions.github.io/>`_
 
 
