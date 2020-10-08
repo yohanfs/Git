@@ -1,0 +1,525 @@
+GIT
+====================================================================================================
+
+.. contents:: Daftar Isi
+
+Getting Started
+----------------------------------------------------------------------------------------------------
+
+- Install perangkat lunak * `git <(https://git-scm.com/download/win)>`_ * `git
+  extensions <https://gitextensions.github.io/>`_
+
+
+- Generate SSH Key
+
+::
+	
+        $ ssh-keygen -t rsa -C "your_email@youremail.com"
+
+
+Secara default, file rsa akan disimpan di ``C:\Users\username\.ssh`` (windows)
+atau ``home/user/.ssh`` (ubuntu). Terdapat 2 jenis file rsa, yaitu public key
+dan private key. Public key selanjutnya dikopikan ke akun git.
+
+- Pengaturan Identitas
+
+::
+
+    $ git config --global user.name "your name"
+    $ git config --global user.email youremail@domain.com
+
+- Bila setelah konfigurasi di atas, git tidak bisa berhasil dijalankan, cobalah
+  tambah file config (tanpa ekstensi) sebagai berikut:
+
+::
+
+        #akun kesatu
+        Host gitlab.com
+                HostName gitlab.com
+                Preferredauthentications publickey
+                User git
+                IdentityFile ~/.ssh/id_rsa_kesatu
+
+Jika dilihat di ``home/user``, maka tree direktori adalah:
+
+::
+
+        | home/user
+        | ├── .ssh
+        | │   ├── config
+        | │   ├── known_hosts
+        | │   ├── id_rsa_kesatu
+        | │   └── id_rsa_kesatu.pub
+
+
+Git di WSL
+----------------------------------------------------------------------------------------------------
+
+WSL (*windows subsystems for linux*) adalah *environment* yang berbeda dengan
+Windows. Oleh karena itu git harus diinstall kembali di WSL. Langkah-langkahnya
+seperti penjelasan di ``Getting Started``.  Ditambah dengan file config berikut:
+
+::
+
+        #akun kesatu
+        Host gitlab.com
+                HostName gitlab.com
+                Preferredauthentications publickey
+                User git
+                IdentityFile ~/.ssh/id_rsa_kesatu
+
+Ketika dicoba untuk mengcloning sebuah repositori, maka akan muncul *error*
+sebagai berikut:
+
+::
+
+        Bad owner or permissions on /home/user/.ssh/config
+        fatal: could not read from remote repository
+
+        Please make sure you have the correct access rights and the repository
+        exists
+
+Solusinya adalah dengan cara menjalankan *command* berikut:
+
+::
+
+        chmod 600 ~/.ssh/config
+
+**Referensi**
+
+- `serverfault: ssh returns "Bad owner"
+  <https://serverfault.com/questions/253313/ssh-returns-bad-owner-or-permissions-on-ssh-config>`_
+
+
+Multiple SSH
+----------------------------------------------------------------------------------------------------
+
+Tujuan membuat multiple SSH adalah untuk menggunakan akun git lebih dari 1 pada
+sebuah komputer. Sebagai contoh, berikut ini 2 buah SSH key akan di-*generate*.
+
+- Buka direktori *SSH key*. Kemudian git-bash di folder tersebut.
+
+::
+
+        C:\Users\username\.ssh
+    
+
+- *Generate* SSH key
+  
+        * SSH key 1: ``ssh-keygen -t rsa -C "your_email@youremail.com"``
+
+        * SSH key 2: ``ssh-keygen -t rsa -C "your_email@youremail.com"``
+        
+
+Beri nama masing-masing key di atas dengan id_rsa_kesatu dan id_rsa_kedua
+
+- *Add* kedua *key* tersebut
+
+::
+
+        eval `ssh-agent -s` ssh-add id_rsa_kesatu ssh-add id_rsa_kedua
+    
+
+- Cek *key* yang telah tersimpan:
+
+::
+
+        ssh-add -l
+    
+- Bila diperlukan, hapus ssh-agent yang tersimpan sebelumnya, kemudian add kembali
+
+::
+
+      ssh-add -D
+
+
+- Buat file config, yang berisi
+
+::
+
+        #akun kesatu
+        Host gitlab
+                HostName gitlab.com
+                User git
+                IdentityFile ~/.ssh/id_rsa_kesatu
+
+        #akun kedua
+        Host github.com
+                HostName github.com
+                User git
+                IdentityFile ~/.ssh/id_rsa_kedua
+
+        #akun ketiga
+        Host github.com-yohan
+                HostName github.com
+                User git
+                IdentityFile ~/.ssh/id_rsa_ketiga
+
+    
+
+- Masukkan *public key* ke akun git
+
+Berdasarkan pengalaman, apabila multiple akun tersebut berasal dari host yang
+sama, misalnya dari github, maka ada modifikasi tambahan yang perlu dilakukan.
+Modifikasi tersebut dilakukan pada file config yang bisa ditemukan di dalam
+folder (.git). Folder ini secara default dalam kondisi hidden sehingga untuk
+menampilkan perlu unhidden dulu. Pada file config tersebut, url repository perlu
+disesuaikan dengan hostname. Misalnya:
+
+::
+
+        [remote "origin"] url = git@github.com-yohan:yourRepository.git
+
+
+Catatan lain perihal config file ini adalah penggunaan tab sebelum kata
+HostName. Tab yang terlalu panjang ternyata menyebabkan config file tersebut
+tidak berjalan (lihat gambar di bawah).  Oleh karenanya, contoh di atas bisa
+diikuti agar config tersebut bisa berjalan.
+
+.. image:: images/error.png
+
+
+- Cek koneksi ssh
+
+::
+
+   ssh -T git@gitlab.com
+
+**Referensi**
+
+- `Multiple SSH Keys settings for different github account
+  <https://gist.github.com/jexchan/2351996>`_ - `Could not open a connection to
+  your authentication agent
+  <https://stackoverflow.com/questions/17846529/could-not-open-a-connection-to-your-authentication-agent>`_
+
+
+Git Path
+----------------------------------------------------------------------------------------------------
+
+Supaya git bisa dijalankan di command line di windows, git harus disertakan di
+``System Environment`` Windows. Path-nya sebagai berikut:
+
+::
+
+        C:\Program Files\Git\cmd
+
+Git Bash
+----------------------------------------------------------------------------------------------------
+
+Git Bash merupakan sebuah terminal yang diinstall secara bersamaan dengan git.
+Git bash ini bisa digunakan sebagaimana terminal pada umumnya. *Command*-nya
+juga sama dengan terminal di ubuntu. Salah satu fitur yang saya sukai adalah
+pengaturan ``alias`` di sistem terminal ubuntu yang juga tersedia di Git bash.
+Alias ini berguna untuk menyederhanakan sebuah *command* menjadi *command* yang
+namanya bisa diset sesuai dengan keinginan. Misalnya, sebuah *command*: ``git
+status`` bisa menjadi ``gs``. Cara yang perlu dilakukan adalah dengan
+mengaturnya di file yang bernama ``.bashrc``. Di Windows, file ini disimpan di :
+``C:\Users\username\.bashrc``. 
+
+Contoh penulisan alias:
+
+::
+
+        alias gs='git status'
+
+Dengan konsep ini, kita juga bisa membuat *command* untuk menuju folder
+tertentu. Misalnya ingin menuju folder D:\library\yohan, maka aliasnya:
+
+::
+
+        alias lib='cd /d/library/yohan'
+
+Dengan demikian, *command* yang panjang dan sering digunakan bisa dipermudah dan
+*working flow* bisa menjadi lebih cepat.       
+
+
+
+Update Git
+----------------------------------------------------------------------------------------------------
+
+Sebelum update, cek versi terlebih dahulu di Terminal:
+
+::
+
+        git --version
+
+Kemudian update dengan cara:
+
+**Windows**
+
+::
+
+        git update-git-for-windows
+
+**Linux**
+
+::
+
+        sudo add-apt-repository ppa:git-core/ppa -y
+        sudo apt-get update
+        sudo apt-get install git -y
+        git --version
+
+**Referensi**
+
+- `Atlassian: installing and upgrading git <https://confluence.atlassian.com/bitbucketserver/installing-and-upgrading-git-776640906.html>`_
+- `unix.stackexchange: update git using apt-get <https://unix.stackexchange.com/questions/33617/how-can-i-update-to-a-newer-version-of-git-using-apt-get>`_ 
+
+
+Syntax Dasar Git
+----------------------------------------------------------------------------------------------------
+
+
+Syntax dasar untuk melakukan push dan pull melalui terminal (di windows: git
+bash).
+
+- Push
+
+::
+
+        $ git status
+        $ git add . 
+        $ git commit -m "isi pesan di sini"
+        $ git push origin master
+        
+
+
+- Pull
+
+
+::
+
+        $ git pull origin master
+
+
+**Referensi**
+
+- `git-scm: basic syntax <https://git-scm.com/docs/gittutorial>`_
+
+Membuat Repositori Baru
+----------------------------------------------------------------------------------------------------
+
+Ada 2 cara untuk membuat repositori git. Pertama dengan cara cloning repositori
+dari remote. Kedua dengan cara menjadikan eksisting folder menjadi git
+repositori. Untuk kedua langkah tersebut, langkah awalnya adalah sama, yaitu
+membuat *remote repository*. Selanjutnya dapat mengikuti langkah-langkah
+berikut:
+
+- Cloning Repositori
+
+::
+
+    git clone "url git repository" `
+
+- Existing Folder
+
+::
+
+    git init
+    git remote add origin "url git repository"
+    
+
+Setelah folder dibuat dan diisi dengan files, maka selanjutnya data tersebut
+bisa disimpan di *remote repository* dengan cara:
+
+::
+
+        git add . 
+        git commit -m "initial commit"
+        git push -u origin master
+
+
+Mengabaikan File
+----------------------------------------------------------------------------------------------------
+
+Terkadang ada files di dalam folder git yang tidak ingin kita *push* ke
+repositori. Files tersebut memungkinkan di-*ignore* dengan cara mendefinisikan
+dalam sebuah file dengan ekstensi **.gitignore**.
+
+Sebagai contoh folder yang bernama **tes** ingin diabaikan oleh git maka isi
+dari file **.gitignore** adalah:
+
+::
+
+        # Ignore folder named 'tes'
+        files/tes/
+
+
+File **.gitignore** ini bisa ditempatkan di folder mana saja di dalam file git.
+URL folder yang diabaikannya mengunakan URL relative terhadap file
+**.gitignore**.
+
+Submodule
+----------------------------------------------------------------------------------------------------
+
+*Command* untuk meng-*cloning* git repository sebagai submodule sebagai berikut:
+
+::
+
+        git submodule add [url to git repo]
+        git submodule init
+
+
+**Referensi**
+
+- `Using submodules in Git - Tutorial
+  <https://www.vogella.com/tutorials/GitSubmodules/article.html>`_
+
+Git Branch
+----------------------------------------------------------------------------------------------------
+
+Ketika membuat sebuah repositori di git, maka secara default akan dibuatkan
+sebuah repositori yang bernama ``master``. Repositori ini sebenarnya adalah
+sebuah branch. Di dalam git, memungkinkan untuk mengcloning branch tersebut
+dengan menggunakan nama branch yang baru. Dengan demikian, perubahan yang
+terjadi di branch yang baru tidak langsung mengubah data di ``master``. 
+
+Setiap commit yang dilakukan disimpan sebagai snapshot data pada commit
+tersebut. Contoh snapshot commit pada branch master adalah sebagai berikut:
+
+.. image:: images/gitbranch_initial.svg
+
+Data tersebut bisa dilihat dengan *command*:
+
+::
+
+        git log --oneline
+
+Branch master tersebut memiliki 3 buah commit. Commit yang terakhir ditandai
+dengan pointer ``head``. Misalnya pada contoh ini, branch yang bernama testing
+dibuat dengan cara:
+
+
+::
+
+        git branch testing
+
+Maka akan ada 2 buah branch sebagai berikut:
+
+
+.. image:: images/gitbranch_testing.svg
+
+Sampai sini, branch testing hanya ada di lokal komputer. 
+
+Untuk bekerja dengan branch ``testing``, jalankan *command* berikut:
+
+::
+
+        git checkout testing
+
+Maka pointer head akan berpindah ke branch testing. 
+
+
+.. image:: images/gitbranch_testing_head.svg
+
+Setelah melakukan perubahan di branch testing, kemudian commitlah data tersebut
+dengan cara:
+
+::
+
+        git add .  git commit -m "C3"
+
+Maka history git sekarang menjadi:
+
+
+.. image:: images/gitbranch_commit.svg
+
+Selanjutnya, setelah semua pengembangan di branch testing selesai dikerjakan.
+Datanya bisa digabungkan dengan branch master. Caranya adalah dengan memindahkan
+pointer head ke master terlebih dahulu:
+
+::
+
+        git checkout master
+
+Kemudian gabungkan dengan ``git merge``:
+
+::
+
+        git merge testing
+
+
+Maka history git sekarang menjadi:
+
+.. image:: images/gitbranch_final.svg
+
+
+Apabila branch testing sudah tidak diperlukan lagi, branch tersebut bisa
+didelete dengan cara:
+
+::
+
+        git branch -d testing
+
+
+**Referensi**
+
+- `Git branching
+  <https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging>`_
+
+Delete Git Branch
+----------------------------------------------------------------------------------------------------
+
+Git Branch harus di-delete di lokal dan di remote. Caranya adalah:
+
+- Lokal
+
+::
+
+        git branch -a #to see the list of branches
+        git branch -d repositoryname
+
+
+Catatan: Gunakan -D untuk *force delete*.
+
+- Remote
+
+::
+
+        git branch -a #to see the list of branches
+        git push origin --delete repositoryname
+
+Git Merge
+----------------------------------------------------------------------------------------------------
+
+**Referensi**
+
+- `Git Branching - Branches in a Nutshell
+  <https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell>`_
+
+
+Undo Last Commit
+----------------------------------------------------------------------------------------------------
+
+- *Commit* terakhir akan dihapus dari Git history
+
+::
+
+    $ git reset --soft HEAD~1
+
+
+HEAD~1 artinya adalah me-*reset* HEAD (*commit* terakhir).
+
+- Cek log history
+
+::
+
+    $ git log --oneline
+
+**Referensi**
+
+- `devconnected: how to undo last git commit
+  <https://devconnected.com/how-to-undo-last-git-commit/>`_
+
+
+Merging vs Rebasing
+----------------------------------------------------------------------------------------------------
+
+
+**References**
+
+- `Atlassian: Merging vs Rebasing <https://www.atlassian.com/git/tutorials/merging-vs-rebasing>`_
+- `git-scm: Git Branching - Rebasing <https://git-scm.com/book/en/v2/Git-Branching-Rebasing>`_
+
+
+
