@@ -1,0 +1,964 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.16: http://docutils.sourceforge.net/" />
+<title>GIT</title>
+<style type="text/css">
+
+/*! normalize.css v2.1.3 | MIT License | git.io/normalize */
+
+/* ==========================================================================
+   HTML5 display definitions
+   ========================================================================== */
+
+/**
+ * Correct `block` display not defined in IE 8/9.
+ */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+    display: block;
+}
+
+/**
+ * Correct `inline-block` display not defined in IE 8/9.
+ */
+
+audio,
+canvas,
+video {
+    display: inline-block;
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9.
+ * Hide the `template` element in IE, Safari, and Firefox < 22.
+ */
+
+[hidden],
+template {
+    display: none;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+
+html {
+    font-family: sans-serif; /* 1 */
+    -ms-text-size-adjust: 100%; /* 2 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+
+body {
+    margin: 0;
+}
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+
+a {
+    background: transparent;
+}
+
+/**
+ * Address `outline` inconsistency between Chrome and other browsers.
+ */
+
+a:focus {
+    outline: thin dotted;
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+
+a:active,
+a:hover {
+    outline: 0;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari 5, and Chrome.
+ */
+
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+/**
+ * Address styling not present in IE 8/9, Safari 5, and Chrome.
+ */
+
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
+ */
+
+b,
+strong {
+    font-weight: bold;
+}
+
+/**
+ * Address styling not present in Safari 5 and Chrome.
+ */
+
+dfn {
+    font-style: italic;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+
+hr {
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+
+mark {
+    background: #ff0;
+    color: #000;
+}
+
+/**
+ * Correct font family set oddly in Safari 5 and Chrome.
+ */
+
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, serif;
+    font-size: 1em;
+}
+
+/**
+ * Improve readability of pre-formatted text in all browsers.
+ */
+
+pre {
+    white-space: pre-wrap;
+}
+
+/**
+ * Set consistent quote types.
+ */
+
+q {
+    quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+
+small {
+    font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+/* ==========================================================================
+   Embedded content
+   ========================================================================== */
+
+/**
+ * Remove border when inside `a` element in IE 8/9.
+ */
+
+img {
+    border: 0;
+}
+
+/**
+ * Correct overflow displayed oddly in IE 9.
+ */
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Figures
+   ========================================================================== */
+
+/**
+ * Address margin not present in IE 8/9 and Safari 5.
+ */
+
+figure {
+    margin: 0;
+}
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+
+fieldset {
+    border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+
+legend {
+    border: 0; /* 1 */
+    padding: 0; /* 2 */
+}
+
+/**
+ * 1. Correct font family not being inherited in all browsers.
+ * 2. Correct font size not being inherited in all browsers.
+ * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+ */
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit; /* 1 */
+    font-size: 100%; /* 2 */
+    margin: 0; /* 3 */
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+
+button,
+input {
+    line-height: normal;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.
+ * Correct `select` style inheritance in Firefox 4+ and Opera.
+ */
+
+button,
+select {
+    text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button; /* 2 */
+    cursor: pointer; /* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+
+button[disabled],
+html input[disabled] {
+    cursor: default;
+}
+
+/**
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+
+input[type="checkbox"],
+input[type="radio"] {
+    box-sizing: border-box; /* 1 */
+    padding: 0; /* 2 */
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
+
+input[type="search"] {
+    -webkit-appearance: textfield; /* 1 */
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box; /* 2 */
+    box-sizing: content-box;
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari 5 and Chrome
+ * on OS X.
+ */
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/**
+ * 1. Remove default vertical scrollbar in IE 8/9.
+ * 2. Improve readability and alignment in all browsers.
+ */
+
+textarea {
+    overflow: auto; /* 1 */
+    vertical-align: top; /* 2 */
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+/**
+ * Remove most spacing between table cells.
+ */
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.go-top {
+position: fixed;
+bottom: 2em;
+right: 2em;
+text-decoration: none;
+background-color: #E0E0E0;
+font-size: 12px;
+padding: 1em;
+display: inline;
+}
+
+/* Github css */
+
+html,body{        margin: auto;
+    padding-right: 1em;
+    padding-left: 1em;
+    max-width: 44em; color:black;}*:not('#mkdbuttons'){margin:0;padding:0}body{font:13.34px helvetica,arial,freesans,clean,sans-serif;-webkit-font-smoothing:subpixel-antialiased;line-height:1.4;padding:3px;background:#fff;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px}p{margin:1em 0}a{color:#4183c4;text-decoration:none}body{background-color:#fff;padding:30px;margin:15px;font-size:14px;line-height:1.6}body>*:first-child{margin-top:0!important}body>*:last-child{margin-bottom:0!important}@media screen{body{box-shadow:0 0 0 1px #cacaca,0 0 0 4px #eee}}h1,h2,h3,h4,h5,h6{margin:20px 0 10px;padding:0;font-weight:bold;-webkit-font-smoothing:subpixel-antialiased;cursor:text}h1{font-size:28px;color:#000}h2{font-size:24px;border-bottom:1px solid #ccc;color:#000}h3{font-size:18px;color:#333}h4{font-size:16px;color:#333}h5{font-size:14px;color:#333}h6{color:#777;font-size:14px}p,blockquote,table,pre{margin:15px 0}ul{padding-left:30px}ol{padding-left:30px}ol li ul:first-of-type{margin-top:0}hr{background:transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;border:0 none;color:#ccc;height:4px;padding:0}body>h2:first-child{margin-top:0;padding-top:0}body>h1:first-child{margin-top:0;padding-top:0}body>h1:first-child+h2{margin-top:0;padding-top:0}body>h3:first-child,body>h4:first-child,body>h5:first-child,body>h6:first-child{margin-top:0;padding-top:0}a:first-child h1,a:first-child h2,a:first-child h3,a:first-child h4,a:first-child h5,a:first-child h6{margin-top:0;padding-top:0}h1+p,h2+p,h3+p,h4+p,h5+p,h6+p,ul li>:first-child,ol li>:first-child{margin-top:0}dl{padding:0}dl dt{font-size:14px;font-weight:bold;font-style:italic;padding:0;margin:15px 0 5px}dl dt:first-child{padding:0}dl dt>:first-child{margin-top:0}dl dt>:last-child{margin-bottom:0}dl dd{margin:0 0 15px;padding:0 15px}dl dd>:first-child{margin-top:0}dl dd>:last-child{margin-bottom:0}blockquote{border-left:4px solid #DDD;padding:0 15px;color:#777}blockquote>:first-child{margin-top:0}blockquote>:last-child{margin-bottom:0}table{border-collapse:collapse;border-spacing:0;font-size:100%;font:inherit}table th{font-weight:bold;border:1px solid #ccc;padding:6px 13px}table td{border:1px solid #ccc;padding:6px 13px}table tr{border-top:1px solid #ccc;background-color:#fff}table tr:nth-child(2n){background-color:#f8f8f8}img{max-width:100%}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px;font-family:Consolas,'Liberation Mono',Courier,monospace;font-size:12px;color:#333}pre>code{margin:0;padding:0;white-space:pre;border:0;background:transparent}.highlight pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}pre code,pre tt{background-color:transparent;border:0}.poetry pre{font-family:Georgia,Garamond,serif!important;font-style:italic;font-size:110%!important;line-height:1.6em;display:block;margin-left:1em}.poetry pre code{font-family:Georgia,Garamond,serif!important;word-break:break-all;word-break:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;white-space:pre-wrap}sup,sub,a.footnote{font-size:1.4ex;height:0;line-height:1;vertical-align:super;position:relative}sub{vertical-align:sub;top:-1px}@media print{body{background:#fff}img,pre,blockquote,table,figure{page-break-inside:avoid}body{background:#fff;border:0}code{background-color:#fff;color:#333!important;padding:0 .2em;border:1px solid #dedede}pre{background:#fff}pre code{background-color:white!important;overflow:visible}}@media screen{body.inverted{color:#eee!important;border-color:#555;box-shadow:none}.inverted body,.inverted hr .inverted p,.inverted td,.inverted li,.inverted h1,.inverted h2,.inverted h3,.inverted h4,.inverted h5,.inverted h6,.inverted th,.inverted .math,.inverted caption,.inverted dd,.inverted dt,.inverted blockquote{color:#eee!important;border-color:#555;box-shadow:none}.inverted td,.inverted th{background:#333}.inverted h2{border-color:#555}.inverted hr{border-color:#777;border-width:1px!important}::selection{background:rgba(157,193,200,0.5)}h1::selection{background-color:rgba(45,156,208,0.3)}h2::selection{background-color:rgba(90,182,224,0.3)}h3::selection,h4::selection,h5::selection,h6::selection,li::selection,ol::selection{background-color:rgba(133,201,232,0.3)}code::selection{background-color:rgba(0,0,0,0.7);color:#eee}code span::selection{background-color:rgba(0,0,0,0.7)!important;color:#eee!important}a::selection{background-color:rgba(255,230,102,0.2)}.inverted a::selection{background-color:rgba(255,230,102,0.6)}td::selection,th::selection,caption::selection{background-color:rgba(180,237,95,0.5)}.inverted{background:#0b2531;background:#252a2a}.inverted body{background:#252a2a}.inverted a{color:#acd1d5}}.highlight .c{color:#998;font-style:italic}.highlight .err{color:#a61717;background-color:#e3d2d2}.highlight .k,.highlight .o{font-weight:bold}.highlight .cm{color:#998;font-style:italic}.highlight .cp{color:#999;font-weight:bold}.highlight .c1{color:#998;font-style:italic}.highlight .cs{color:#999;font-weight:bold;font-style:italic}.highlight .gd{color:#000;background-color:#fdd}.highlight .gd .x{color:#000;background-color:#faa}.highlight .ge{font-style:italic}.highlight .gr{color:#a00}.highlight .gh{color:#999}.highlight .gi{color:#000;background-color:#dfd}.highlight .gi .x{color:#000;background-color:#afa}.highlight .go{color:#888}.highlight .gp{color:#555}.highlight .gs{font-weight:bold}.highlight .gu{color:#800080;font-weight:bold}.highlight .gt{color:#a00}.highlight .kc,.highlight .kd,.highlight .kn,.highlight .kp,.highlight .kr{font-weight:bold}.highlight .kt{color:#458;font-weight:bold}.highlight .m{color:#099}.highlight .s{color:#d14}.highlight .na{color:#008080}.highlight .nb{color:#0086b3}.highlight .nc{color:#458;font-weight:bold}.highlight .no{color:#008080}.highlight .ni{color:#800080}.highlight .ne,.highlight .nf{color:#900;font-weight:bold}.highlight .nn{color:#555}.highlight .nt{color:#000080}.highlight .nv{color:#008080}.highlight .ow{font-weight:bold}.highlight .w{color:#bbb}.highlight .mf,.highlight .mh,.highlight .mi,.highlight .mo{color:#099}.highlight .sb,.highlight .sc,.highlight .sd,.highlight .s2,.highlight .se,.highlight .sh,.highlight .si,.highlight .sx{color:#d14}.highlight .sr{color:#009926}.highlight .s1{color:#d14}.highlight .ss{color:#990073}.highlight .bp{color:#999}.highlight .vc,.highlight .vg,.highlight .vi{color:#008080}.highlight .il{color:#099}.highlight .gc{color:#999;background-color:#eaf2f5}.type-csharp .highlight .k,.type-csharp .highlight .kt{color:#00F}.type-csharp .highlight .nf{color:#000;font-weight:normal}.type-csharp .highlight .nc{color:#2b91af}.type-csharp .highlight .nn{color:#000}.type-csharp .highlight .s,.type-csharp .highlight .sc{color:#a31515}
+
+</style>
+</head>
+<body>
+<div class="document" id="git">
+<h1 class="title">GIT</h1>
+
+<div class="contents topic" id="daftar-isi">
+<p class="topic-title">Daftar Isi</p>
+<ul class="simple">
+<li><a class="reference internal" href="#getting-started" id="id2">Getting Started</a></li>
+<li><a class="reference internal" href="#git-di-wsl" id="id3">Git di WSL</a></li>
+<li><a class="reference internal" href="#multiple-ssh" id="id4">Multiple SSH</a></li>
+<li><a class="reference internal" href="#git-path" id="id5">Git Path</a></li>
+<li><a class="reference internal" href="#git-bash" id="id6">Git Bash</a></li>
+<li><a class="reference internal" href="#update-git" id="id7">Update Git</a></li>
+<li><a class="reference internal" href="#syntax-dasar-git" id="id8">Syntax Dasar Git</a></li>
+<li><a class="reference internal" href="#membuat-repositori-baru" id="id9">Membuat Repositori Baru</a></li>
+<li><a class="reference internal" href="#mengabaikan-file" id="id10">Mengabaikan File</a></li>
+<li><a class="reference internal" href="#submodule" id="id11">Submodule</a></li>
+<li><a class="reference internal" href="#git-branch" id="id12">Git Branch</a></li>
+<li><a class="reference internal" href="#delete-git-branch" id="id13">Delete Git Branch</a></li>
+<li><a class="reference internal" href="#git-merge" id="id14">Git Merge</a></li>
+<li><a class="reference internal" href="#undo-last-changes" id="id15">Undo Last Changes</a><ul>
+<li><a class="reference internal" href="#undo-last-commit" id="id16">Undo Last Commit</a></li>
+<li><a class="reference internal" href="#discard-unstaged-files" id="id17">Discard Unstaged Files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#lokal-hosting" id="id18">Lokal Hosting</a></li>
+</ul>
+</div>
+<div class="section" id="getting-started">
+<h1><a class="toc-backref" href="#id2">Getting Started</a></h1>
+<ul>
+<li><p class="first">Install perangkat lunak</p>
+<blockquote>
+<ul class="simple">
+<li><a class="reference external" href="https://git-scm.com/download/win">git</a></li>
+<li><a class="reference external" href="https://gitextensions.github.io/">git extensions</a></li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">Generate SSH Key</p>
+</li>
+</ul>
+<pre class="literal-block">
+$ ssh-keygen -t rsa -C &quot;your_email&#64;youremail.com&quot;
+</pre>
+<p>Secara default, file rsa akan disimpan di <tt class="docutils literal"><span class="pre">C:\Users\username\.ssh</span></tt> (windows)
+atau <tt class="docutils literal"><span class="pre">home/user/.ssh</span></tt> (ubuntu). Terdapat 2 jenis file rsa, yaitu public key
+dan private key. Public key selanjutnya dikopikan ke akun git.</p>
+<ul class="simple">
+<li>Pengaturan Identitas</li>
+</ul>
+<pre class="literal-block">
+$ git config --global user.name &quot;your name&quot;
+$ git config --global user.email youremail&#64;domain.com
+</pre>
+<ul class="simple">
+<li><em>Add</em> ke <em>agent</em></li>
+</ul>
+<p><strong>Add</strong></p>
+<pre class="literal-block">
+$ eval `ssh-agent -s` ssh-add id_rsa
+</pre>
+<p><strong>Cek agent</strong></p>
+<pre class="literal-block">
+$ ssh-add -l
+</pre>
+<ul class="simple">
+<li>Bila setelah konfigurasi di atas, git tidak bisa berhasil dijalankan, cobalah
+tambah file config (tanpa ekstensi) sebagai berikut:</li>
+</ul>
+<pre class="literal-block">
+#akun kesatu
+Host gitlab.com
+        HostName gitlab.com
+        Preferredauthentications publickey
+        User git
+        IdentityFile ~/.ssh/id_rsa_kesatu
+</pre>
+<p>Jika dilihat di <tt class="docutils literal">home/user</tt>, maka tree direktori adalah:</p>
+<pre class="literal-block">
+| home/user
+| â”œâ”€â”€ .ssh
+| â”‚   â”œâ”€â”€ config
+| â”‚   â”œâ”€â”€ known_hosts
+| â”‚   â”œâ”€â”€ id_rsa_kesatu
+| â”‚   â””â”€â”€ id_rsa_kesatu.pub
+</pre>
+</div>
+<div class="section" id="git-di-wsl">
+<h1><a class="toc-backref" href="#id3">Git di WSL</a></h1>
+<p>WSL (<em>windows subsystems for linux</em>) adalah <em>environment</em> yang berbeda dengan
+Windows. Oleh karena itu git harus diinstall kembali di WSL. Langkah-langkahnya
+seperti penjelasan di <tt class="docutils literal">Getting Started</tt>.  Ditambah dengan file config berikut:</p>
+<pre class="literal-block">
+#akun kesatu
+Host gitlab.com
+        HostName gitlab.com
+        Preferredauthentications publickey
+        User git
+        IdentityFile ~/.ssh/id_rsa_kesatu
+</pre>
+<p>Ketika dicoba untuk mengcloning sebuah repositori, maka akan muncul <em>error</em>
+sebagai berikut:</p>
+<pre class="literal-block">
+Bad owner or permissions on /home/user/.ssh/config
+fatal: could not read from remote repository
+
+Please make sure you have the correct access rights and the repository
+exists
+</pre>
+<p>Solusinya adalah dengan cara menjalankan <em>command</em> berikut:</p>
+<pre class="literal-block">
+chmod 600 ~/.ssh/config
+</pre>
+<p><strong>Referensi</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://serverfault.com/questions/253313/ssh-returns-bad-owner-or-permissions-on-ssh-config">serverfault: ssh returns &quot;Bad owner&quot;</a></li>
+</ul>
+</div>
+<div class="section" id="multiple-ssh">
+<h1><a class="toc-backref" href="#id4">Multiple SSH</a></h1>
+<p>Tujuan membuat multiple SSH adalah untuk menggunakan akun git lebih dari 1 pada
+sebuah komputer. Sebagai contoh, berikut ini 2 buah SSH key akan di-<em>generate</em>.</p>
+<ul class="simple">
+<li>Buka direktori <em>SSH key</em>. Kemudian git-bash di folder tersebut.</li>
+</ul>
+<pre class="literal-block">
+C:\Users\username\.ssh
+</pre>
+<ul>
+<li><p class="first"><em>Generate</em> SSH key</p>
+<blockquote>
+<ul class="simple">
+<li>SSH key 1: <tt class="docutils literal"><span class="pre">ssh-keygen</span> <span class="pre">-t</span> rsa <span class="pre">-C</span> &quot;your_email&#64;youremail.com&quot;</tt></li>
+<li>SSH key 2: <tt class="docutils literal"><span class="pre">ssh-keygen</span> <span class="pre">-t</span> rsa <span class="pre">-C</span> &quot;your_email&#64;youremail.com&quot;</tt></li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>Beri nama masing-masing key di atas dengan id_rsa_kesatu dan id_rsa_kedua</p>
+<ul class="simple">
+<li><em>Add</em> kedua <em>key</em> tersebut</li>
+</ul>
+<pre class="literal-block">
+eval `ssh-agent -s` ssh-add id_rsa_kesatu ssh-add id_rsa_kedua
+</pre>
+<ul class="simple">
+<li>Cek <em>key</em> yang telah tersimpan:</li>
+</ul>
+<pre class="literal-block">
+ssh-add -l
+</pre>
+<ul class="simple">
+<li>Bila diperlukan, hapus ssh-agent yang tersimpan sebelumnya, kemudian add kembali</li>
+</ul>
+<pre class="literal-block">
+ssh-add -D
+</pre>
+<ul class="simple">
+<li>Buat file config, yang berisi</li>
+</ul>
+<pre class="literal-block">
+#akun kesatu
+Host gitlab
+        HostName gitlab.com
+        User git
+        IdentityFile ~/.ssh/id_rsa_kesatu
+
+#akun kedua
+Host github.com
+        HostName github.com
+        User git
+        IdentityFile ~/.ssh/id_rsa_kedua
+
+#akun ketiga
+Host github.com-yohan
+        HostName github.com
+        User git
+        IdentityFile ~/.ssh/id_rsa_ketiga
+</pre>
+<ul class="simple">
+<li>Masukkan <em>public key</em> ke akun git</li>
+</ul>
+<p>Berdasarkan pengalaman, apabila multiple akun tersebut berasal dari host yang
+sama, misalnya dari github, maka ada modifikasi tambahan yang perlu dilakukan.
+Modifikasi tersebut dilakukan pada file config yang bisa ditemukan di dalam
+folder (.git). Folder ini secara default dalam kondisi hidden sehingga untuk
+menampilkan perlu unhidden dulu. Pada file config tersebut, url repository perlu
+disesuaikan dengan hostname. Misalnya:</p>
+<pre class="literal-block">
+[remote &quot;origin&quot;] url = git&#64;github.com-yohan:yourRepository.git
+</pre>
+<p>Catatan lain perihal config file ini adalah penggunaan tab sebelum kata
+HostName. Tab yang terlalu panjang ternyata menyebabkan config file tersebut
+tidak berjalan (lihat gambar di bawah).  Oleh karenanya, contoh di atas bisa
+diikuti agar config tersebut bisa berjalan.</p>
+<img alt="images/error.png" src="images/error.png" />
+<ul class="simple">
+<li>Cek koneksi ssh</li>
+</ul>
+<pre class="literal-block">
+ssh -T git&#64;gitlab.com
+</pre>
+<p><strong>Referensi</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://gist.github.com/jexchan/2351996">Multiple SSH Keys settings for different github account</a> - <a class="reference external" href="https://stackoverflow.com/questions/17846529/could-not-open-a-connection-to-your-authentication-agent">Could not open a connection to
+your authentication agent</a></li>
+</ul>
+</div>
+<div class="section" id="git-path">
+<h1><a class="toc-backref" href="#id5">Git Path</a></h1>
+<p>Supaya git bisa dijalankan di command line di windows, git harus disertakan di
+<tt class="docutils literal">System Environment</tt> Windows. Path-nya sebagai berikut:</p>
+<pre class="literal-block">
+C:\Program Files\Git\cmd
+</pre>
+</div>
+<div class="section" id="git-bash">
+<h1><a class="toc-backref" href="#id6">Git Bash</a></h1>
+<p>Git Bash merupakan sebuah terminal yang diinstall secara bersamaan dengan git.
+Git bash ini bisa digunakan sebagaimana terminal pada umumnya. <em>Command</em>-nya
+juga sama dengan terminal di ubuntu. Salah satu fitur yang saya sukai adalah
+pengaturan <tt class="docutils literal">alias</tt> di sistem terminal ubuntu yang juga tersedia di Git bash.
+Alias ini berguna untuk menyederhanakan sebuah <em>command</em> menjadi <em>command</em> yang
+namanya bisa diset sesuai dengan keinginan. Misalnya, sebuah <em>command</em>: <tt class="docutils literal">git
+status</tt> bisa menjadi <tt class="docutils literal">gs</tt>. Cara yang perlu dilakukan adalah dengan
+mengaturnya di file yang bernama <tt class="docutils literal">.bashrc</tt>. Di Windows, file ini disimpan di :
+<tt class="docutils literal"><span class="pre">C:\Users\username\.bashrc</span></tt>.</p>
+<p>Contoh penulisan alias:</p>
+<pre class="literal-block">
+alias gs='git status'
+</pre>
+<p>Dengan konsep ini, kita juga bisa membuat <em>command</em> untuk menuju folder
+tertentu. Misalnya ingin menuju folder D:libraryyohan, maka aliasnya:</p>
+<pre class="literal-block">
+alias lib='cd /d/library/yohan'
+</pre>
+<p>Dengan demikian, <em>command</em> yang panjang dan sering digunakan bisa dipermudah dan
+<em>working flow</em> bisa menjadi lebih cepat.</p>
+</div>
+<div class="section" id="update-git">
+<h1><a class="toc-backref" href="#id7">Update Git</a></h1>
+<p>Sebelum update, cek versi terlebih dahulu di Terminal:</p>
+<pre class="literal-block">
+git --version
+</pre>
+<p>Kemudian update dengan cara:</p>
+<p><strong>Windows</strong></p>
+<pre class="literal-block">
+git update-git-for-windows
+</pre>
+<p><strong>Linux</strong></p>
+<pre class="literal-block">
+sudo add-apt-repository ppa:git-core/ppa -y
+sudo apt-get update
+sudo apt-get install git -y
+git --version
+</pre>
+<p><strong>Referensi</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://confluence.atlassian.com/bitbucketserver/installing-and-upgrading-git-776640906.html">Atlassian: installing and upgrading git</a></li>
+<li><a class="reference external" href="https://unix.stackexchange.com/questions/33617/how-can-i-update-to-a-newer-version-of-git-using-apt-get">unix.stackexchange: update git using apt-get</a></li>
+</ul>
+</div>
+<div class="section" id="syntax-dasar-git">
+<h1><a class="toc-backref" href="#id8">Syntax Dasar Git</a></h1>
+<p>Syntax dasar untuk melakukan push dan pull melalui terminal (di windows: git
+bash).</p>
+<ul class="simple">
+<li>Push</li>
+</ul>
+<pre class="literal-block">
+$ git status
+$ git add .
+$ git commit -m &quot;isi pesan di sini&quot;
+$ git push origin master
+</pre>
+<ul class="simple">
+<li>Pull</li>
+</ul>
+<pre class="literal-block">
+$ git pull origin master
+</pre>
+<p><strong>Referensi</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://git-scm.com/docs/gittutorial">git-scm: basic syntax</a></li>
+</ul>
+</div>
+<div class="section" id="membuat-repositori-baru">
+<h1><a class="toc-backref" href="#id9">Membuat Repositori Baru</a></h1>
+<p>Ada 2 cara untuk membuat repositori git. Pertama dengan cara cloning repositori
+dari remote. Kedua dengan cara menjadikan eksisting folder menjadi git
+repositori. Untuk kedua langkah tersebut, langkah awalnya adalah sama, yaitu
+membuat <em>remote repository</em>. Selanjutnya dapat mengikuti langkah-langkah
+berikut:</p>
+<ul class="simple">
+<li>Cloning Repositori</li>
+</ul>
+<pre class="literal-block">
+git clone &quot;url git repository&quot; `
+</pre>
+<ul class="simple">
+<li>Existing Folder</li>
+</ul>
+<pre class="literal-block">
+git init
+git remote add origin &quot;url git repository&quot;
+</pre>
+<p>Setelah folder dibuat dan diisi dengan files, maka selanjutnya data tersebut
+bisa disimpan di <em>remote repository</em> dengan cara:</p>
+<pre class="literal-block">
+git add .
+git commit -m &quot;initial commit&quot;
+git push -u origin master
+</pre>
+</div>
+<div class="section" id="mengabaikan-file">
+<h1><a class="toc-backref" href="#id10">Mengabaikan File</a></h1>
+<p>Terkadang ada files di dalam folder git yang tidak ingin kita <em>push</em> ke
+repositori. Files tersebut memungkinkan di-<em>ignore</em> dengan cara mendefinisikan
+dalam sebuah file dengan ekstensi <strong>.gitignore</strong>.</p>
+<p>Sebagai contoh folder yang bernama <strong>tes</strong> ingin diabaikan oleh git maka isi
+dari file <strong>.gitignore</strong> adalah:</p>
+<pre class="literal-block">
+# Ignore folder named 'tes'
+files/tes/
+</pre>
+<p>File <strong>.gitignore</strong> ini bisa ditempatkan di folder mana saja di dalam file git.
+URL folder yang diabaikannya mengunakan URL relative terhadap file
+<strong>.gitignore</strong>.</p>
+</div>
+<div class="section" id="submodule">
+<h1><a class="toc-backref" href="#id11">Submodule</a></h1>
+<p><em>Command</em> untuk meng-<em>cloning</em> git repository sebagai submodule sebagai berikut:</p>
+<pre class="literal-block">
+git submodule add [url to git repo]
+git submodule init
+</pre>
+<p><strong>Referensi</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.vogella.com/tutorials/GitSubmodules/article.html">Using submodules in Git - Tutorial</a></li>
+</ul>
+</div>
+<div class="section" id="git-branch">
+<h1><a class="toc-backref" href="#id12">Git Branch</a></h1>
+<p>Ketika membuat sebuah repositori di git, maka secara default akan dibuatkan
+sebuah repositori yang bernama <tt class="docutils literal">master</tt>. Repositori ini sebenarnya adalah
+sebuah branch. Di dalam git, memungkinkan untuk mengcloning branch tersebut
+dengan menggunakan nama branch yang baru. Dengan demikian, perubahan yang
+terjadi di branch yang baru tidak langsung mengubah data di <tt class="docutils literal">master</tt>.</p>
+<p>Setiap commit yang dilakukan disimpan sebagai snapshot data pada commit
+tersebut. Contoh snapshot commit pada branch master adalah sebagai berikut:</p>
+<object data="images/gitbranch_initial.svg" type="image/svg+xml">
+images/gitbranch_initial.svg</object>
+<p>Data tersebut bisa dilihat dengan <em>command</em>:</p>
+<pre class="literal-block">
+git log --oneline
+</pre>
+<p>Branch master tersebut memiliki 3 buah commit. Commit yang terakhir ditandai
+dengan pointer <tt class="docutils literal">head</tt>. Misalnya pada contoh ini, branch yang bernama testing
+dibuat dengan cara:</p>
+<pre class="literal-block">
+git branch testing
+</pre>
+<p>Maka akan ada 2 buah branch sebagai berikut:</p>
+<object data="images/gitbranch_testing.svg" type="image/svg+xml">
+images/gitbranch_testing.svg</object>
+<p>Sampai sini, branch testing hanya ada di lokal komputer.</p>
+<p>Untuk bekerja dengan branch <tt class="docutils literal">testing</tt>, jalankan <em>command</em> berikut:</p>
+<pre class="literal-block">
+git checkout testing
+</pre>
+<p>Maka pointer head akan berpindah ke branch testing.</p>
+<object data="images/gitbranch_testing_head.svg" type="image/svg+xml">
+images/gitbranch_testing_head.svg</object>
+<p>Setelah melakukan perubahan di branch testing, kemudian commitlah data tersebut
+dengan cara:</p>
+<pre class="literal-block">
+git add .  git commit -m &quot;C3&quot;
+</pre>
+<p>Maka history git sekarang menjadi:</p>
+<object data="images/gitbranch_commit.svg" type="image/svg+xml">
+images/gitbranch_commit.svg</object>
+<p>Selanjutnya, setelah semua pengembangan di branch testing selesai dikerjakan.
+Datanya bisa digabungkan dengan branch master. Caranya adalah dengan memindahkan
+pointer head ke master terlebih dahulu:</p>
+<pre class="literal-block">
+git checkout master
+</pre>
+<p>Kemudian gabungkan dengan <tt class="docutils literal">git merge</tt>:</p>
+<pre class="literal-block">
+git merge testing
+</pre>
+<p>Maka history git sekarang menjadi:</p>
+<object data="images/gitbranch_final.svg" type="image/svg+xml">
+images/gitbranch_final.svg</object>
+<p>Apabila branch testing sudah tidak diperlukan lagi, branch tersebut bisa
+didelete dengan cara:</p>
+<pre class="literal-block">
+git branch -d testing
+</pre>
+<p><strong>Referensi</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging">Git branching</a></li>
+</ul>
+</div>
+<div class="section" id="delete-git-branch">
+<h1><a class="toc-backref" href="#id13">Delete Git Branch</a></h1>
+<p>Git Branch harus di-delete di lokal dan di remote. Caranya adalah:</p>
+<ul class="simple">
+<li>Lokal</li>
+</ul>
+<pre class="literal-block">
+git branch -a #to see the list of branches
+git branch -d repositoryname
+</pre>
+<p>Catatan: Gunakan -D untuk <em>force delete</em>.</p>
+<ul class="simple">
+<li>Remote</li>
+</ul>
+<pre class="literal-block">
+git branch -a #to see the list of branches
+git push origin --delete repositoryname
+</pre>
+</div>
+<div class="section" id="git-merge">
+<h1><a class="toc-backref" href="#id14">Git Merge</a></h1>
+<p><strong>References</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell">Git Branching - Branches in a Nutshell</a></li>
+<li><a class="reference external" href="https://www.atlassian.com/git/tutorials/merging-vs-rebasing">Atlassian: Merging vs Rebasing</a></li>
+<li><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Rebasing">git-scm: Git Branching - Rebasing</a></li>
+</ul>
+</div>
+<div class="section" id="undo-last-changes">
+<h1><a class="toc-backref" href="#id15">Undo Last Changes</a></h1>
+<div class="section" id="undo-last-commit">
+<h2><a class="toc-backref" href="#id16">Undo Last Commit</a></h2>
+<ul class="simple">
+<li><em>Commit</em> terakhir akan dihapus dari Git history</li>
+</ul>
+<pre class="literal-block">
+$ git reset --soft HEAD~1
+</pre>
+<p>HEAD~1 artinya adalah me-<em>reset</em> HEAD (<em>commit</em> terakhir).</p>
+<ul class="simple">
+<li>Cek log history</li>
+</ul>
+<pre class="literal-block">
+$ git log --oneline
+</pre>
+<p><strong>Referensi</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://devconnected.com/how-to-undo-last-git-commit/">devconnected: how to undo last git commit</a></li>
+</ul>
+</div>
+<div class="section" id="discard-unstaged-files">
+<h2><a class="toc-backref" href="#id17">Discard Unstaged Files</a></h2>
+<pre class="literal-block">
+git checkout .. -
+</pre>
+<p><strong>Referensi</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://stackoverflow.com/questions/52704/how-do-i-discard-unstaged-changes-in-git">stackoverflow: discard unstaged changes</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="lokal-hosting">
+<h1><a class="toc-backref" href="#id18">Lokal Hosting</a></h1>
+<p><strong>Pengertian Git dan Github/Gitlab</strong></p>
+<p>Berikut ini adalah pengertian Git dan Github/Gitlab berdasarkan pemahaman saya.</p>
+<p>Git dan github/gitlab adalah <em>service</em> yang berbeda. Git adalah <em>version
+control software</em> yang bekerja di lokal komputer. Sedangkan github/gitlab adalah
+cloud service untuk penyimpanan data Git.</p>
+<p>Dengan konsep tersebut, saya kemudian berekperimen untuk menyimpan <em>remote</em> data
+di lokal <em>server</em> dan berhasil dijalankan.</p>
+<p><strong>Tutorial</strong></p>
+<p>Berikut ini adalah tutorialnya:</p>
+<ul class="simple">
+<li>pilih <em>remote folder</em> di server, misalnya:</li>
+</ul>
+<p><strong>Ubuntu</strong></p>
+<pre class="literal-block">
+$ /mnt/remoteFiles/tes
+</pre>
+<p><strong>Windows</strong></p>
+<pre class="literal-block">
+$ /Y/remoteFiles/tes
+</pre>
+<p>path di atas dinamakan <tt class="docutils literal">/path/to/remote</tt> yang akan digunakan pada <em>syntax</em> di
+penjelasan berikutnya.</p>
+<ul class="simple">
+<li>jadikan sebagai git repository</li>
+</ul>
+<pre class="literal-block">
+$ git init --bare
+</pre>
+<ul class="simple">
+<li>create repo untuk bekerja</li>
+</ul>
+<pre class="literal-block">
+$ git init
+$ git remote add &lt;name-of-remote&gt; /path/to/remote
+</pre>
+<p>Misalnya:</p>
+<pre class="literal-block">
+$ git remote add origin /mnt/remoteFiles/tes
+</pre>
+<ul class="simple">
+<li>push to remote</li>
+</ul>
+<pre class="literal-block">
+$ git push -u &lt;name-of-remote&gt; master
+</pre>
+<p>Misalnya:</p>
+<pre class="literal-block">
+$ git push -u origin master
+</pre>
+<ul class="simple">
+<li>Cloning</li>
+</ul>
+<pre class="literal-block">
+$ git clone /path/to/remote
+</pre>
+</div>
+</div>
+</body>
+</html>

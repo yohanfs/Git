@@ -6,7 +6,8 @@ GIT
 Getting Started
 ----------------------------------------------------------------------------------------------------
 
-- Install perangkat lunak 
+- Install perangkat lunak
+
    + `git <https://git-scm.com/download/win>`_ 
    + `git extensions <https://gitextensions.github.io/>`_
 
@@ -28,6 +29,20 @@ dan private key. Public key selanjutnya dikopikan ke akun git.
 
     $ git config --global user.name "your name"
     $ git config --global user.email youremail@domain.com
+
+- *Add* ke *agent*
+
+**Add**
+
+::
+
+    $ eval `ssh-agent -s` ssh-add id_rsa
+
+**Cek agent**
+
+::
+
+    $ ssh-add -l
 
 - Bila setelah konfigurasi di atas, git tidak bisa berhasil dijalankan, cobalah
   tambah file config (tanpa ekstensi) sebagai berikut:
@@ -483,14 +498,18 @@ Catatan: Gunakan -D untuk *force delete*.
 Git Merge
 ----------------------------------------------------------------------------------------------------
 
-**Referensi**
+**References**
 
 - `Git Branching - Branches in a Nutshell
   <https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell>`_
+- `Atlassian: Merging vs Rebasing <https://www.atlassian.com/git/tutorials/merging-vs-rebasing>`_
+- `git-scm: Git Branching - Rebasing <https://git-scm.com/book/en/v2/Git-Branching-Rebasing>`_
 
+Undo Last Changes
+----------------------------------------------------------------------------------------------------
 
 Undo Last Commit
-----------------------------------------------------------------------------------------------------
+*********************************************************************************
 
 - *Commit* terakhir akan dihapus dari Git history
 
@@ -512,15 +531,86 @@ HEAD~1 artinya adalah me-*reset* HEAD (*commit* terakhir).
 - `devconnected: how to undo last git commit
   <https://devconnected.com/how-to-undo-last-git-commit/>`_
 
+Discard Unstaged Files
+*********************************************************************************
 
-Merging vs Rebasing
-----------------------------------------------------------------------------------------------------
+::
 
+        git checkout .. -
 
-**References**
+**Referensi**
 
-- `Atlassian: Merging vs Rebasing <https://www.atlassian.com/git/tutorials/merging-vs-rebasing>`_
-- `git-scm: Git Branching - Rebasing <https://git-scm.com/book/en/v2/Git-Branching-Rebasing>`_
+- `stackoverflow: discard unstaged changes <https://stackoverflow.com/questions/52704/how-do-i-discard-unstaged-changes-in-git>`_ 
 
+Lokal Hosting
+---------------------------------------------------------------------------------
 
+**Pengertian Git dan Github/Gitlab**
+
+Berikut ini adalah pengertian Git dan Github/Gitlab berdasarkan pemahaman saya. 
+
+Git dan github/gitlab adalah *service* yang berbeda. Git adalah *version
+control software* yang bekerja di lokal komputer. Sedangkan github/gitlab adalah
+cloud service untuk penyimpanan data Git. 
+
+Dengan konsep tersebut, saya kemudian berekperimen untuk menyimpan *remote* data
+di lokal *server* dan berhasil dijalankan.  
+
+**Tutorial**
+
+Berikut ini adalah tutorialnya:
+
+- pilih *remote folder* di server, misalnya:
+
+**Ubuntu**
+
+::
+
+   $ /mnt/remoteFiles/tes
+
+**Windows**
+
+::
+
+   $ /Y/remoteFiles/tes
+
+path di atas dinamakan ``/path/to/remote`` yang akan digunakan pada *syntax* di
+penjelasan berikutnya.
+
+- jadikan sebagai git repository
+
+::
+
+   $ git init --bare
+
+- create repo untuk bekerja
+
+::
+
+   $ git init
+   $ git remote add <name-of-remote> /path/to/remote
+
+Misalnya:
+
+::
+
+   $ git remote add origin /mnt/remoteFiles/tes
+
+- push to remote
+
+::
+
+   $ git push -u <name-of-remote> master
+
+Misalnya:
+
+::
+
+   $ git push -u origin master
+
+- Cloning
+
+::
+
+   $ git clone /path/to/remote
 
