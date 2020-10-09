@@ -614,3 +614,6 @@ Misalnya:
 
    $ git clone /path/to/remote
 
+Update
+
+- `tutorial from other <https://unixnme.blogspot.com/2016/07/how-to-setup-git-server-on-mac-os-x.html>`_
