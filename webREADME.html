@@ -459,7 +459,7 @@ html,body{        margin: auto;
 <li><a class="reference internal" href="#discard-unstaged-files" id="id17">Discard Unstaged Files</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#lokal-hosting" id="id18">Lokal Hosting</a></li>
+<li><a class="reference internal" href="#lokal-git-server" id="id18">Lokal Git Server</a></li>
 </ul>
 </div>
 <div class="section" id="getting-started">
@@ -901,19 +901,19 @@ git checkout .. -
 </ul>
 </div>
 </div>
-<div class="section" id="lokal-hosting">
-<h1><a class="toc-backref" href="#id18">Lokal Hosting</a></h1>
+<div class="section" id="lokal-git-server">
+<h1><a class="toc-backref" href="#id18">Lokal Git Server</a></h1>
 <p><strong>Pengertian Git dan Github/Gitlab</strong></p>
 <p>Berikut ini adalah pengertian Git dan Github/Gitlab berdasarkan pemahaman saya.</p>
 <p>Git dan github/gitlab adalah <em>service</em> yang berbeda. Git adalah <em>version
 control software</em> yang bekerja di lokal komputer. Sedangkan github/gitlab adalah
-cloud service untuk penyimpanan data Git.</p>
+cloud service untuk penyimpanan data Git (<em>server</em>).</p>
 <p>Dengan konsep tersebut, saya kemudian berekperimen untuk menyimpan <em>remote</em> data
-di lokal <em>server</em> dan berhasil dijalankan.</p>
+di lokal <em>server</em> dan berhasil dijalankan baik itu di Windows, Linux, dan MacOS.</p>
 <p><strong>Tutorial</strong></p>
 <p>Berikut ini adalah tutorialnya:</p>
 <ul class="simple">
-<li>pilih <em>remote folder</em> di server, misalnya:</li>
+<li>create <em>remote folder</em> di <em>server</em>, misalnya:</li>
 </ul>
 <p><strong>Ubuntu</strong></p>
 <pre class="literal-block">
@@ -923,7 +923,12 @@ $ /mnt/remoteFiles/tes
 <pre class="literal-block">
 $ /Y/remoteFiles/tes
 </pre>
-<p>path di atas dinamakan <tt class="docutils literal">/path/to/remote</tt> yang akan digunakan pada <em>syntax</em> di
+<p><strong>Windows/Ubuntu/MacOS | General path</strong></p>
+<pre class="literal-block">
+$ ssh://username&#64;ipaddress/path/to/remote.git
+</pre>
+<p>Untuk cek path dari metode ssh adalah dengan perintah <tt class="docutils literal">$ pwd</tt>.</p>
+<p>Semua path di atas dinamakan <tt class="docutils literal">/path/to/remote</tt> yang akan digunakan pada <em>syntax</em> di
 penjelasan berikutnya.</p>
 <ul class="simple">
 <li>jadikan sebagai git repository</li>
@@ -932,11 +937,11 @@ penjelasan berikutnya.</p>
 $ git init --bare
 </pre>
 <ul class="simple">
-<li>create repo untuk bekerja</li>
+<li>create lokal repo</li>
 </ul>
 <pre class="literal-block">
 $ git init
-$ git remote add &lt;name-of-remote&gt; /path/to/remote
+$ git remote add origin /path/to/remote
 </pre>
 <p>Misalnya:</p>
 <pre class="literal-block">
@@ -946,10 +951,6 @@ $ git remote add origin /mnt/remoteFiles/tes
 <li>push to remote</li>
 </ul>
 <pre class="literal-block">
-$ git push -u &lt;name-of-remote&gt; master
-</pre>
-<p>Misalnya:</p>
-<pre class="literal-block">
 $ git push -u origin master
 </pre>
 <ul class="simple">
@@ -958,7 +959,7 @@ $ git push -u origin master
 <pre class="literal-block">
 $ git clone /path/to/remote
 </pre>
-<p>Update</p>
+<p><strong>Referensi</strong></p>
 <ul class="simple">
 <li><a class="reference external" href="https://unixnme.blogspot.com/2016/07/how-to-setup-git-server-on-mac-os-x.html">tutorial from other</a></li>
 </ul>

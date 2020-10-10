@@ -542,7 +542,7 @@ Discard Unstaged Files
 
 - `stackoverflow: discard unstaged changes <https://stackoverflow.com/questions/52704/how-do-i-discard-unstaged-changes-in-git>`_ 
 
-Lokal Hosting
+Lokal Git Server
 ---------------------------------------------------------------------------------
 
 **Pengertian Git dan Github/Gitlab**
@@ -551,16 +551,16 @@ Berikut ini adalah pengertian Git dan Github/Gitlab berdasarkan pemahaman saya.
 
 Git dan github/gitlab adalah *service* yang berbeda. Git adalah *version
 control software* yang bekerja di lokal komputer. Sedangkan github/gitlab adalah
-cloud service untuk penyimpanan data Git. 
+cloud service untuk penyimpanan data Git (*server*). 
 
 Dengan konsep tersebut, saya kemudian berekperimen untuk menyimpan *remote* data
-di lokal *server* dan berhasil dijalankan.  
+di lokal *server* dan berhasil dijalankan baik itu di Windows, Linux, dan MacOS.
 
 **Tutorial**
 
 Berikut ini adalah tutorialnya:
 
-- pilih *remote folder* di server, misalnya:
+- create *remote folder* di *server*, misalnya:
 
 **Ubuntu**
 
@@ -574,7 +574,15 @@ Berikut ini adalah tutorialnya:
 
    $ /Y/remoteFiles/tes
 
-path di atas dinamakan ``/path/to/remote`` yang akan digunakan pada *syntax* di
+**Windows/Ubuntu/MacOS | General path**
+
+::
+
+   $ ssh://username@ipaddress/path/to/remote.git
+
+Untuk cek path dari metode ssh adalah dengan perintah ``$ pwd``. 
+
+Semua path di atas dinamakan ``/path/to/remote`` yang akan digunakan pada *syntax* di
 penjelasan berikutnya.
 
 - jadikan sebagai git repository
@@ -583,12 +591,12 @@ penjelasan berikutnya.
 
    $ git init --bare
 
-- create repo untuk bekerja
+- create lokal repo 
 
 ::
 
    $ git init
-   $ git remote add <name-of-remote> /path/to/remote
+   $ git remote add origin /path/to/remote
 
 Misalnya:
 
@@ -600,12 +608,6 @@ Misalnya:
 
 ::
 
-   $ git push -u <name-of-remote> master
-
-Misalnya:
-
-::
-
    $ git push -u origin master
 
 - Cloning
@@ -614,6 +616,6 @@ Misalnya:
 
    $ git clone /path/to/remote
 
-Update
+**Referensi**
 
 - `tutorial from other <https://unixnme.blogspot.com/2016/07/how-to-setup-git-server-on-mac-os-x.html>`_
