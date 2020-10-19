@@ -460,6 +460,7 @@ html,body{        margin: auto;
 </ul>
 </li>
 <li><a class="reference internal" href="#lokal-git-server" id="id18">Lokal Git Server</a></li>
+<li><a class="reference internal" href="#git-fetch-vs-git-pull" id="id19">Git Fetch vs Git Pull</a></li>
 </ul>
 </div>
 <div class="section" id="getting-started">
@@ -490,19 +491,7 @@ $ git config --global user.name &quot;your name&quot;
 $ git config --global user.email youremail&#64;domain.com
 </pre>
 <ul class="simple">
-<li><em>Add</em> ke <em>agent</em></li>
-</ul>
-<p><strong>Add</strong></p>
-<pre class="literal-block">
-$ eval `ssh-agent -s` ssh-add id_rsa
-</pre>
-<p><strong>Cek agent</strong></p>
-<pre class="literal-block">
-$ ssh-add -l
-</pre>
-<ul class="simple">
-<li>Bila setelah konfigurasi di atas, git tidak bisa berhasil dijalankan, cobalah
-tambah file config (tanpa ekstensi) sebagai berikut:</li>
+<li>Buatlah file config (tanpa ekstensi) sebagai berikut:</li>
 </ul>
 <pre class="literal-block">
 #akun kesatu
@@ -511,6 +500,17 @@ Host gitlab.com
         Preferredauthentications publickey
         User git
         IdentityFile ~/.ssh/id_rsa_kesatu
+</pre>
+<ul class="simple">
+<li>Bila cara di atas belum sukses, jalankan <em>command</em> berikut:</li>
+</ul>
+<p><strong>Add</strong></p>
+<pre class="literal-block">
+$ eval `ssh-agent -s` ssh-add id_rsa
+</pre>
+<p><strong>Cek agent</strong></p>
+<pre class="literal-block">
+$ ssh-add -l
 </pre>
 <p>Jika dilihat di <tt class="docutils literal">home/user</tt>, maka tree direktori adalah:</p>
 <pre class="literal-block">
@@ -575,24 +575,6 @@ C:\Users\username\.ssh
 </ul>
 <p>Beri nama masing-masing key di atas dengan id_rsa_kesatu dan id_rsa_kedua</p>
 <ul class="simple">
-<li><em>Add</em> kedua <em>key</em> tersebut</li>
-</ul>
-<pre class="literal-block">
-eval `ssh-agent -s` ssh-add id_rsa_kesatu ssh-add id_rsa_kedua
-</pre>
-<ul class="simple">
-<li>Cek <em>key</em> yang telah tersimpan:</li>
-</ul>
-<pre class="literal-block">
-ssh-add -l
-</pre>
-<ul class="simple">
-<li>Bila diperlukan, hapus ssh-agent yang tersimpan sebelumnya, kemudian add kembali</li>
-</ul>
-<pre class="literal-block">
-ssh-add -D
-</pre>
-<ul class="simple">
 <li>Buat file config, yang berisi</li>
 </ul>
 <pre class="literal-block">
@@ -613,6 +595,24 @@ Host github.com-yohan
         HostName github.com
         User git
         IdentityFile ~/.ssh/id_rsa_ketiga
+</pre>
+<ul class="simple">
+<li><em>Add</em> kedua <em>key</em> tersebut</li>
+</ul>
+<pre class="literal-block">
+eval `ssh-agent -s` ssh-add id_rsa_kesatu ssh-add id_rsa_kedua
+</pre>
+<ul class="simple">
+<li>Cek <em>key</em> yang telah tersimpan:</li>
+</ul>
+<pre class="literal-block">
+ssh-add -l
+</pre>
+<ul class="simple">
+<li>Bila diperlukan, hapus ssh-agent yang tersimpan sebelumnya, kemudian add kembali</li>
+</ul>
+<pre class="literal-block">
+ssh-add -D
 </pre>
 <ul class="simple">
 <li>Masukkan <em>public key</em> ke akun git</li>
@@ -962,6 +962,35 @@ $ git clone /path/to/remote
 <p><strong>Referensi</strong></p>
 <ul class="simple">
 <li><a class="reference external" href="https://unixnme.blogspot.com/2016/07/how-to-setup-git-server-on-mac-os-x.html">tutorial from other</a></li>
+</ul>
+</div>
+<div class="section" id="git-fetch-vs-git-pull">
+<h1><a class="toc-backref" href="#id19">Git Fetch vs Git Pull</a></h1>
+<p>Syntax</p>
+<pre class="literal-block">
+$ git fetch origin
+</pre>
+<pre class="literal-block">
+$ git pull origin master
+</pre>
+<p>Persamaan</p>
+<blockquote>
+Git fetch and git pull digunakan untuk mengunduh data baru dari <em>remote
+repository</em>.</blockquote>
+<p>Perbedaan</p>
+<blockquote>
+<p>Git fetch hanya mengunduh metadata baru dari <em>remote repository</em>, tetapi
+tidak mengintegrasikan data baru ke <em>working files</em>.</p>
+<p>Git pull mengunduh semua data dan mengintegrasikan data tersebut ke
+<em>remote repository</em>.</p>
+<p>Dikarenakan Git pull akan mengabungkan (merge) data remote ke lokal,
+maka <em>merge conflict</em> bisa terjadi. Gunakanlah <em>git pull</em> hanya dengan
+<em>clean working copy</em>. Ini artinya tidak terdapat <em>local changes</em> sebelum
+pull.</p>
+</blockquote>
+<p>Referensi</p>
+<ul class="simple">
+<li><a class="reference external" href="https://gitbetter.substack.com/p/how-to-use-git-fetch-and-git-pull">how to use git fetch and git pull effectively</a></li>
 </ul>
 </div>
 </div>

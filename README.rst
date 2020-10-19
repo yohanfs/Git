@@ -30,7 +30,19 @@ dan private key. Public key selanjutnya dikopikan ke akun git.
     $ git config --global user.name "your name"
     $ git config --global user.email youremail@domain.com
 
-- *Add* ke *agent*
+
+- Buatlah file config (tanpa ekstensi) sebagai berikut:
+
+::
+
+        #akun kesatu
+        Host gitlab.com
+                HostName gitlab.com
+                Preferredauthentications publickey
+                User git
+                IdentityFile ~/.ssh/id_rsa_kesatu
+
+- Bila cara di atas belum sukses, jalankan *command* berikut:
 
 **Add**
 
@@ -43,18 +55,6 @@ dan private key. Public key selanjutnya dikopikan ke akun git.
 ::
 
     $ ssh-add -l
-
-- Bila setelah konfigurasi di atas, git tidak bisa berhasil dijalankan, cobalah
-  tambah file config (tanpa ekstensi) sebagai berikut:
-
-::
-
-        #akun kesatu
-        Host gitlab.com
-                HostName gitlab.com
-                Preferredauthentications publickey
-                User git
-                IdentityFile ~/.ssh/id_rsa_kesatu
 
 Jika dilihat di ``home/user``, maka tree direktori adalah:
 
@@ -129,26 +129,6 @@ sebuah komputer. Sebagai contoh, berikut ini 2 buah SSH key akan di-*generate*.
 
 Beri nama masing-masing key di atas dengan id_rsa_kesatu dan id_rsa_kedua
 
-- *Add* kedua *key* tersebut
-
-::
-
-        eval `ssh-agent -s` ssh-add id_rsa_kesatu ssh-add id_rsa_kedua
-    
-
-- Cek *key* yang telah tersimpan:
-
-::
-
-        ssh-add -l
-    
-- Bila diperlukan, hapus ssh-agent yang tersimpan sebelumnya, kemudian add kembali
-
-::
-
-      ssh-add -D
-
-
 - Buat file config, yang berisi
 
 ::
@@ -171,7 +151,24 @@ Beri nama masing-masing key di atas dengan id_rsa_kesatu dan id_rsa_kedua
                 User git
                 IdentityFile ~/.ssh/id_rsa_ketiga
 
+- *Add* kedua *key* tersebut
+
+::
+
+        eval `ssh-agent -s` ssh-add id_rsa_kesatu ssh-add id_rsa_kedua
     
+
+- Cek *key* yang telah tersimpan:
+
+::
+
+        ssh-add -l
+    
+- Bila diperlukan, hapus ssh-agent yang tersimpan sebelumnya, kemudian add kembali
+
+::
+
+      ssh-add -D
 
 - Masukkan *public key* ke akun git
 
@@ -619,3 +616,38 @@ Misalnya:
 **Referensi**
 
 - `tutorial from other <https://unixnme.blogspot.com/2016/07/how-to-setup-git-server-on-mac-os-x.html>`_
+
+Git Fetch vs Git Pull
+---------------------------------------------------------------------------------
+
+Syntax
+
+::
+
+        $ git fetch origin 
+
+::
+
+        $ git pull origin master
+
+Persamaan
+
+        Git fetch and git pull digunakan untuk mengunduh data baru dari *remote
+        repository*. 
+
+Perbedaan
+
+        Git fetch hanya mengunduh metadata baru dari *remote repository*, tetapi
+        tidak mengintegrasikan data baru ke *working files*. 
+
+        Git pull mengunduh semua data dan mengintegrasikan data tersebut ke
+        *remote repository*. 
+
+        Dikarenakan Git pull akan mengabungkan (merge) data remote ke lokal,
+        maka *merge conflict* bisa terjadi. Gunakanlah *git pull* hanya dengan
+        *clean working copy*. Ini artinya tidak terdapat *local changes* sebelum
+        pull. 
+
+Referensi
+
+- `how to use git fetch and git pull effectively <https://gitbetter.substack.com/p/how-to-use-git-fetch-and-git-pull>`_
