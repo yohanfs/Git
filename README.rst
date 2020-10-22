@@ -651,3 +651,28 @@ Perbedaan
 Referensi
 
 - `how to use git fetch and git pull effectively <https://gitbetter.substack.com/p/how-to-use-git-fetch-and-git-pull>`_
+
+Git Status
+---------------------------------------------------------------------------------
+
+**Fungsi**
+
+``Git status`` berfungsi untuk menunjukkan status, misalnya sudah commit dan
+push. 
+
+**Isu**
+
+Apabila git yang dibuat pertama kali di sistem operasi Windows dibuka di sistem
+operasi lain dalam hal ini Linux, maka walaupun data sudah sinkron dengan
+remote, ``git status`` di Linux akan menunjukkan bahwa beberapa file dalam kondisi
+*modified* sehingga harus di-add dan commit. Ini dikarenakan ada isu dengan
+*line endings*. Untuk mengatasi hal tersebut jalankan command berikut di terminal
+linux:
+
+::
+
+	git config --global core.autocrlf true
+
+**Referensi**
+
+- `git status shows all files as modified <https://github.com/microsoft/WSL/issues/184>`_

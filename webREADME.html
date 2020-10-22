@@ -461,6 +461,7 @@ html,body{        margin: auto;
 </li>
 <li><a class="reference internal" href="#lokal-git-server" id="id18">Lokal Git Server</a></li>
 <li><a class="reference internal" href="#git-fetch-vs-git-pull" id="id19">Git Fetch vs Git Pull</a></li>
+<li><a class="reference internal" href="#git-status" id="id20">Git Status</a></li>
 </ul>
 </div>
 <div class="section" id="getting-started">
@@ -515,11 +516,11 @@ $ ssh-add -l
 <p>Jika dilihat di <tt class="docutils literal">home/user</tt>, maka tree direktori adalah:</p>
 <pre class="literal-block">
 | home/user
-| â”œâ”€â”€ .ssh
-| â”‚   â”œâ”€â”€ config
-| â”‚   â”œâ”€â”€ known_hosts
-| â”‚   â”œâ”€â”€ id_rsa_kesatu
-| â”‚   â””â”€â”€ id_rsa_kesatu.pub
+| ├── .ssh
+| │   ├── config
+| │   ├── known_hosts
+| │   ├── id_rsa_kesatu
+| │   └── id_rsa_kesatu.pub
 </pre>
 </div>
 <div class="section" id="git-di-wsl">
@@ -991,6 +992,26 @@ pull.</p>
 <p>Referensi</p>
 <ul class="simple">
 <li><a class="reference external" href="https://gitbetter.substack.com/p/how-to-use-git-fetch-and-git-pull">how to use git fetch and git pull effectively</a></li>
+</ul>
+</div>
+<div class="section" id="git-status">
+<h1><a class="toc-backref" href="#id20">Git Status</a></h1>
+<p><strong>Fungsi</strong></p>
+<p><tt class="docutils literal">Git status</tt> berfungsi untuk menunjukkan status, misalnya sudah commit dan
+push.</p>
+<p><strong>Isu</strong></p>
+<p>Apabila git yang dibuat pertama kali di sistem operasi Windows dibuka di sistem
+operasi lain dalam hal ini Linux, maka walaupun data sudah sinkron dengan
+remote, <tt class="docutils literal">git status</tt> di Linux akan menunjukkan bahwa beberapa file dalam kondisi
+<em>modified</em> sehingga harus di-add dan commit. Ini dikarenakan ada isu dengan
+<em>line endings</em>. Untuk mengatasi hal tersebut jalankan command berikut di terminal
+linux:</p>
+<pre class="literal-block">
+git config --global core.autocrlf true
+</pre>
+<p><strong>Referensi</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/microsoft/WSL/issues/184">git status shows all files as modified</a></li>
 </ul>
 </div>
 </div>
