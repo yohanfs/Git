@@ -67,6 +67,12 @@ Jika dilihat di ``home/user``, maka tree direktori adalah:
         | │   ├── id_rsa_kesatu
         | │   └── id_rsa_kesatu.pub
 
+- Apabila ada masalah dengan file permission (Ubuntu), jalankan *command* berikut:
+
+::
+
+	$ chmod 600 id_rsa_kesatu 
+
 
 Git di WSL
 ----------------------------------------------------------------------------------------------------
@@ -676,3 +682,22 @@ linux:
 **Referensi**
 
 - `git status shows all files as modified <https://github.com/microsoft/WSL/issues/184>`_
+
+Commor Error
+---------------------------------------------------------------------------------
+
+`Cannot open .git/FETCH_HEAD: Permission denied`_
+
+
+
+
+
+
+
+
+
+
+
+
+
+.. _`Cannot open .git/FETCH_HEAD: Permission denied`: https://stackoverflow.com/questions/32378984/error-on-git-pull-error-cannot-open-git-fetch-head-permission-denied
