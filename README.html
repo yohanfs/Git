@@ -517,11 +517,11 @@ $ ssh-add -l
 <p>Jika dilihat di <tt class="docutils literal">home/user</tt>, maka tree direktori adalah:</p>
 <pre class="literal-block">
 | home/user
-| ├── .ssh
-| │   ├── config
-| │   ├── known_hosts
-| │   ├── id_rsa_kesatu
-| │   └── id_rsa_kesatu.pub
+| â”œâ”€â”€ .ssh
+| â”‚   â”œâ”€â”€ config
+| â”‚   â”œâ”€â”€ known_hosts
+| â”‚   â”œâ”€â”€ id_rsa_kesatu
+| â”‚   â””â”€â”€ id_rsa_kesatu.pub
 </pre>
 <ul class="simple">
 <li>Apabila ada masalah dengan file permission (Ubuntu), jalankan <em>command</em> berikut:</li>
@@ -869,11 +869,19 @@ git push origin --delete repositoryname
 </div>
 <div class="section" id="git-merge">
 <h1><a class="toc-backref" href="#id14">Git Merge</a></h1>
+<p>Ada 2 kondisi untuk merge, <em>fast-forward merge</em> dan <em>three-way merge</em>.</p>
+<p><strong>Fast-Forward Merge</strong></p>
+<p><em>Fast-forward merge</em> terjadi ketika ada path yang linier antar branch yang mau
+di-merge.</p>
+<p><strong>Three-Way Merge</strong></p>
+<p><em>Three-way merge</em> terjadi ketika path-nya tidak linear. Merge ini akan
+menambahkan commit tambahan untuk menggabungkan 2 branch tersebut.</p>
 <p><strong>References</strong></p>
 <ul class="simple">
 <li><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell">Git Branching - Branches in a Nutshell</a></li>
 <li><a class="reference external" href="https://www.atlassian.com/git/tutorials/merging-vs-rebasing">Atlassian: Merging vs Rebasing</a></li>
 <li><a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Rebasing">git-scm: Git Branching - Rebasing</a></li>
+<li><a class="reference external" href="https://dev.to/neshaz/how-to-use-git-merge-the-correctway-25pd">How to Use git Merge</a></li>
 </ul>
 </div>
 <div class="section" id="undo-last-changes">

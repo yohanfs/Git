@@ -501,12 +501,27 @@ Catatan: Gunakan -D untuk *force delete*.
 Git Merge
 ----------------------------------------------------------------------------------------------------
 
+Ada 2 kondisi untuk merge, *fast-forward merge* dan *three-way merge*.
+
+**Fast-Forward Merge**
+
+*Fast-forward merge* terjadi ketika ada path yang linier antar branch yang mau
+di-merge. 
+
+**Three-Way Merge**
+
+*Three-way merge* terjadi ketika path-nya tidak linear. Merge ini akan
+menambahkan commit tambahan untuk menggabungkan 2 branch tersebut. 
+
+
+
 **References**
 
 - `Git Branching - Branches in a Nutshell
   <https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell>`_
 - `Atlassian: Merging vs Rebasing <https://www.atlassian.com/git/tutorials/merging-vs-rebasing>`_
 - `git-scm: Git Branching - Rebasing <https://git-scm.com/book/en/v2/Git-Branching-Rebasing>`_
+- `How to Use git Merge <https://dev.to/neshaz/how-to-use-git-merge-the-correctway-25pd>`_ 
 
 Undo Last Changes
 ----------------------------------------------------------------------------------------------------
@@ -623,6 +638,83 @@ Misalnya:
 
 - `tutorial from other <https://unixnme.blogspot.com/2016/07/how-to-setup-git-server-on-mac-os-x.html>`_
 
+Lokal Web Git
+---------------------------------------------------------------------------------
+
+**Install Gitlab**
+
+Berikut ini adalah cara install Gitlab di Ubuntu 20.04:
+
+- update
+
+::
+
+        $ sudo apt update
+
+- install dependencies
+
+::
+
+        $ sudo apt-get install -y curl openssh-server ca-certificates
+
+- jika ingin Gitlab untuk mengirimkan notifikasi email (optional)
+
+::
+
+        $ sudo apt-get install -y postfix
+
+- install Gitlab CE
+
+::
+
+        $ curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+
+::
+
+        $ sudo apt-get install gitlab-ce
+
+atau *command* berikut ini jika ingin menggunakan external url
+
+::
+
+        $ sudo EXTERNAL_URL="http://gitlabce.example.com" apt-get install gitlab-ce
+
+- selanjutnya jalankan *command* berikut
+
+::
+
+        $ sudo gitlab-ctl reconfigure
+        $ gitlab-ctl start
+
+- akses via web browser
+
+::
+
+        https://your_gitlab_domain_or_server_IP
+
+- saat pertama kali dijalankan akan diminta untuk membuat password
+- *default username* adalah **root**. 
+
+
+**Uninstall Gitlab**
+
+::
+
+        $ sudo apt-get remove gitlab-ce
+        $ sudo rm -rf /var/opt/gitlab
+        $ sudo pkill -f gitlab
+        $ sudo rm -rf /opt/gitlab
+        $ sudo rm -rf /etc/gitlab
+        $ sudo rm -rf /var/opt/gitlab
+
+Kemudian restart komputer.         
+
+**Referensi**
+
+- `install gitlab`_
+
+
+
 Git Fetch vs Git Pull
 ---------------------------------------------------------------------------------
 
@@ -701,3 +793,4 @@ Commor Error
 
 
 .. _`Cannot open .git/FETCH_HEAD: Permission denied`: https://stackoverflow.com/questions/32378984/error-on-git-pull-error-cannot-open-git-fetch-head-permission-denied
+.. _`install gitlab`: https://medium.com/@thecaffeinedev/how-to-setup-and-configure-your-own-gitlab-server-on-ubuntu-20-04-73214cf63882
