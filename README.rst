@@ -638,7 +638,7 @@ Misalnya:
 
 - `tutorial from other <https://unixnme.blogspot.com/2016/07/how-to-setup-git-server-on-mac-os-x.html>`_
 
-Lokal Web Git
+Lokal Git Web
 ---------------------------------------------------------------------------------
 
 **Install Gitlab**
@@ -679,12 +679,20 @@ atau *command* berikut ini jika ingin menggunakan external url
 
         $ sudo EXTERNAL_URL="http://gitlabce.example.com" apt-get install gitlab-ce
 
+
+- untuk konfigurasi ulang external_url atau konfigurasi lainnya, editlah file berikut
+
+::
+
+        $ sudo vim /etc/gitlab/gitlab.rb
+
 - selanjutnya jalankan *command* berikut
 
 ::
 
         $ sudo gitlab-ctl reconfigure
         $ gitlab-ctl start
+        
 
 - akses via web browser
 
@@ -711,8 +719,9 @@ Kemudian restart komputer.
 
 **Referensi**
 
-- `install gitlab`_
-
+- `gitlab.com: install self-managed gitlab`_
+- `medium: install gitlab`_
+- `konfigurasi gitlab`_
 
 
 Git Fetch vs Git Pull
@@ -790,7 +799,9 @@ Commor Error
 
 
 
-
+.. Referensi
 
 .. _`Cannot open .git/FETCH_HEAD: Permission denied`: https://stackoverflow.com/questions/32378984/error-on-git-pull-error-cannot-open-git-fetch-head-permission-denied
-.. _`install gitlab`: https://medium.com/@thecaffeinedev/how-to-setup-and-configure-your-own-gitlab-server-on-ubuntu-20-04-73214cf63882
+.. _`medium: install gitlab`: https://medium.com/@thecaffeinedev/how-to-setup-and-configure-your-own-gitlab-server-on-ubuntu-20-04-73214cf63882
+.. _`konfigurasi gitlab`: https://docs.gitlab.com/omnibus/settings/configuration
+.. _`gitlab.com: install self-managed gitlab`: https://about.gitlab.com/install/#ubuntu
