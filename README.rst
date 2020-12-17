@@ -73,6 +73,12 @@ Jika dilihat di ``home/user``, maka tree direktori adalah:
 
 	$ chmod 600 id_rsa_kesatu 
 
+atau
+
+::
+
+	$ chmod 700 ~/.ssh
+	$ chmod 600 ~/.ssh/*
 
 Git di WSL
 ----------------------------------------------------------------------------------------------------
@@ -115,6 +121,9 @@ Solusinya adalah dengan cara menjalankan *command* berikut:
 
 Multiple SSH
 ----------------------------------------------------------------------------------------------------
+
+Cara 1
+*********************************************************************************
 
 Tujuan membuat multiple SSH adalah untuk menggunakan akun git lebih dari 1 pada
 sebuah komputer. Sebagai contoh, berikut ini 2 buah SSH key akan di-*generate*.
@@ -207,10 +216,30 @@ diikuti agar config tersebut bisa berjalan.
 **Referensi**
 
 - `Multiple SSH Keys settings for different github account
-  <https://gist.github.com/jexchan/2351996>`_ - `Could not open a connection to
-  your authentication agent
-  <https://stackoverflow.com/questions/17846529/could-not-open-a-connection-to-your-authentication-agent>`_
+  <https://gist.github.com/jexchan/2351996>`_ 
+- `Could not open a connection to your authentication agent <https://stackoverflow.com/questions/17846529/could-not-open-a-connection-to-your-authentication-agent>`_
 
+Cara 2
+*********************************************************************************
+
+Buat file config:
+
+::
+
+        Host *
+          IdentityFile ~/.ssh/keys/%r@%h
+
+Simpan ssh key di ~/.ssh/keys/ dengan format <user>@<host>. Contoh struktur foldernya adalah:
+
+::
+
+        ~/.ssh/keys/
+        |__ git@github.com
+        |__ git@github.com.pub
+
+**Referensi**
+
+- `Using separate SSH keys per host`_
 
 Git Path
 ----------------------------------------------------------------------------------------------------
@@ -560,7 +589,7 @@ Discard Unstaged Files
 
 - `stackoverflow: discard unstaged changes <https://stackoverflow.com/questions/52704/how-do-i-discard-unstaged-changes-in-git>`_ 
 
-Lokal Git Server
+Lokal Git Storage
 ---------------------------------------------------------------------------------
 
 **Pengertian Git dan Github/Gitlab**
@@ -638,9 +667,11 @@ Misalnya:
 
 - `tutorial from other <https://unixnme.blogspot.com/2016/07/how-to-setup-git-server-on-mac-os-x.html>`_
 
-Lokal Git Web
+Lokal Git Web (Self Hosted)
 ---------------------------------------------------------------------------------
 
+Gitlab
+*********************************************************************************
 **Install Gitlab**
 
 Berikut ini adalah cara install Gitlab di Ubuntu 20.04:
@@ -723,6 +754,89 @@ Kemudian restart komputer.
 - `medium: install gitlab`_
 - `konfigurasi gitlab`_
 
+Gitea
+*********************************************************************************
+
+**Install Gitea**
+
+Berikut ini adalah cara install Gitea di Raspberry Pi menggunakan docker-compose.yml:
+
+- docker-compose.yml
+
+::
+
+	version: '2'
+	services:
+	  web:
+	    image: kunde21/gitea-arm
+	    container_name: gitea
+	    environment:
+	      - USER_UID=1000
+	      - USER_GID=1000
+	      - DB_TYPE=mysql
+	      - DB_HOST=db:3306
+	      - DB_USER=gitea
+	      - DB_PASSWD=<yourpassword>
+	    restart: always
+	    volumes:
+	      - ./data:/data
+	    ports:
+	      - "80:3000"
+	      - "2200:22"
+	    depends_on:
+	      - db
+	  db:
+	    image: jsurf/rpi-mariadb
+	    restart: always
+	    environment:
+	      - MYSQL_ROOT_PASSWORD=<yourpassword>
+	      - MYSQL_DATABASE=gitea
+	      - MYSQL_USER=gitea
+	      - MYSQL_PASSWORD=<yourpassword>
+	    volumes:
+	      - ./db/:/var/lib/mysql	
+
+- Jalankan docker compose
+
+::
+
+	$ docker-compose up
+
+- Kemudian buka browser dan isi data yang diminta pada initial page
+
+- Kemudian buatlah ssh di *client computer* dan beri nama gitea
+
+::
+
+	$ ssh-keygen
+
+Kemudian buatlah config dengan isi sebagai berikut:
+
+::
+
+	Host gitea.ysi
+	  HostName <IP Address>
+	  User git
+	  Port 2200
+	  IdentityFile ~/.ssh/gitea 
+
+SSH tersebut dapat dites dengan cara:
+
+::
+
+	$ ssh -T gitea.ysi
+
+Perlu diperhatikan di sini, bahwa Gitea dijalankan dalam container sehingga
+perlu menambahkan informasi port yang digunakan. 
+
+**Konfigurasi**
+
+Konfigurasi dapat dilakukan pada file /data/gitea/conf/app.ini. 
+
+
+**Referensi**
+
+- `Gitea`_
 
 Git Fetch vs Git Pull
 ---------------------------------------------------------------------------------
@@ -784,11 +898,46 @@ linux:
 
 - `git status shows all files as modified <https://github.com/microsoft/WSL/issues/184>`_
 
+Multiple Remotes
+---------------------------------------------------------------------------------
+
+Remote bisa ditambahkan sebanyak yang diinginkan. 
+
+Secara default, nama remote biasanya adalah **origin**, sehingga remote biasanya
+ditambahkan dengan *command* (contoh):
+
+::
+
+        $ git remote add origin git@github.com:username/gitrepo.git
+
+Nama **origin** hanya boleh satu. Untuk menambahkan remote baru, buatlah nama
+remote dan url repo. Misalnya untuk menambahkan remote yang bernama
+**newremote**, caranya adalah:
+
+::
+
+        $ git remote add newremote git@gitlab.com:username/gitrepo.git
+
+Oleh dikarenakan ada 2 remote, perlu diperhatikan lagi alamat saat pull dan
+push. 
+
+Misalnya untuk pull dari **newremote**:
+
+::
+
+        $ git pull newremote master
+
+dan untuk push ke **newremote**:
+
+::
+
+        $ git push newremote master
+
 Commor Error
 ---------------------------------------------------------------------------------
 
-`Cannot open .git/FETCH_HEAD: Permission denied`_
-
+- `Cannot open .git/FETCH_HEAD: Permission denied`_
+- `Sign and send pubkey: signing failed`_
 
 
 
@@ -805,3 +954,6 @@ Commor Error
 .. _`medium: install gitlab`: https://medium.com/@thecaffeinedev/how-to-setup-and-configure-your-own-gitlab-server-on-ubuntu-20-04-73214cf63882
 .. _`konfigurasi gitlab`: https://docs.gitlab.com/omnibus/settings/configuration
 .. _`gitlab.com: install self-managed gitlab`: https://about.gitlab.com/install/#ubuntu
+.. _`Sign and send pubkey: signing failed`: https://stackoverflow.com/questions/44250002/how-to-solve-sign-and-send-pubkey-signing-failed-agent-refused-operation
+.. _`Using separate SSH keys per host`: https://ricostacruz.com/til/using-separate-ssh-keys-per-host
+.. _`Gitea`: https://gitea.io/en-us/
