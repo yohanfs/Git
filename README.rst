@@ -826,8 +826,9 @@ SSH tersebut dapat dites dengan cara:
 
 	$ ssh -T gitea.ysi
 
-Perlu diperhatikan di sini, bahwa Gitea dijalankan dalam container sehingga
-perlu menambahkan informasi port yang digunakan. 
+Perlu diperhatikan di sini bahwa ssh menggunakan port 2200 sehingga perlu
+disertakan di dalam config. 
+
 
 **Konfigurasi**
 
@@ -933,6 +934,53 @@ dan untuk push ke **newremote**:
 
         $ git push newremote master
 
+
+Continuous Integration
+---------------------------------------------------------------------------------
+
+Continuous Integration (CI) digunakan untuk mencompile secara otomatis program
+yang ada di dalam *repository*. 
+
+Gitlab CI
+*********************************************************************************
+
+**Contoh Gitlab CI**
+
+
+Cara mengaktifkannya adalah dengan membuat file **.gitlab-ci.yml**. 
+
+Berikut ini adalah contoh isi dari **.gitlab-ci.yml**. Isi file tersebut untuk 
+mengcompile latex file. 
+
+::
+
+	compile_pdf:
+	  image: aergus/latex
+ 	  script:
+            - pdflatex main.tex
+ 	  artifacts:
+   	    paths:
+      	      - main.pdf
+
+
+Isi file tersebut mirip dengan docker-compose.yml. Image yang digunakan pun
+memang berasal dari docker image.
+
+**Install Gitlab Runner**
+
+Agar Gitlab CI dapat dijalankan di self-hosted Gitlab, Gitlab Runner harus
+diinstall.
+
+**Referensi**
+
+- `assign gitlab runner`_  
+
+
+Github CI
+*********************************************************************************
+
+Belum berhasil menjalankan Github CI. 
+
 Commor Error
 ---------------------------------------------------------------------------------
 
@@ -957,3 +1005,4 @@ Commor Error
 .. _`Sign and send pubkey: signing failed`: https://stackoverflow.com/questions/44250002/how-to-solve-sign-and-send-pubkey-signing-failed-agent-refused-operation
 .. _`Using separate SSH keys per host`: https://ricostacruz.com/til/using-separate-ssh-keys-per-host
 .. _`Gitea`: https://gitea.io/en-us/
+.. _`assign gitlab runner`: https://stackoverflow.com/questions/53370840/this-job-is-stuck-because-the-project-doesnt-have-any-runners-online-assigned
