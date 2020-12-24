@@ -899,6 +899,31 @@ linux:
 
 - `git status shows all files as modified <https://github.com/microsoft/WSL/issues/184>`_
 
+Git Config
+---------------------------------------------------------------------------------
+
+*Typical config*:
+
+::
+
+	[core]
+		repositoryformatversion = 0 
+		filemode = true
+		bare = false
+		logallrefupdates = true
+	[remote "gitlocal"]
+		url = git@gitlocal.ysi:phd/diss.git
+		fetch = +refs/heads/*:refs/remotes/gitlocal/*
+	[branch "master"]
+		remote = gitlocal
+		merge = refs/heads/master
+                               
+Lokasi config ada di:
+
+::
+
+	.git/config
+
 Multiple Remotes
 ---------------------------------------------------------------------------------
 
@@ -979,7 +1004,30 @@ diinstall.
 Github CI
 *********************************************************************************
 
-Belum berhasil menjalankan Github CI. 
+Buatlah file .github/workflows/compile.yml. Isinya sebagai berikut:
+
+::
+
+	name: Build LaTeX Document
+	on:
+	  push:
+	    paths:
+	    - '**.tex'
+	jobs:
+	  build_latex:
+	    runs-on: ubuntu-latest
+	    steps:
+	      - name: Set up Git repository
+		uses: actions/checkout@v1
+	      - name: Compile LaTeX document
+		uses: xu-cheng/latex-action@master
+		with:
+		  root_file: main.tex
+	      - name: Uplod PDF
+		uses: actions/upload-artifact@v1
+		with:
+		  name: PDF
+		  path: main.pdf
 
 Commor Error
 ---------------------------------------------------------------------------------
