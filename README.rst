@@ -924,6 +924,84 @@ Lokasi config ada di:
 
 	.git/config
 
+
+Git Tag
+---------------------------------------------------------------------------------
+
+Tag biasanya digunakan untuk menandai rilis sebuah *software*. 
+
+**Menampilkan daftar tag**
+
+::
+
+	$ git tag
+
+**Membuat tag**
+
+::
+
+	$ git tag -a v1.0 -m "versi ke 1.0"
+
+-m adalah untuk menambahkan pesan. Apabila tidak ditambahkan pesan, maka git
+akan membuka text editor. 
+
+**Tag commit terdahulu**
+
+::
+
+	$ git tag -a v1.1 9fceb02
+
+``9fceb02``  adalah nama commit-nya. Bisa dilihat di:
+
+::
+
+	$ git log --oneline 
+
+**Push tag ke remote (misalnya: github/gitlab)**
+
+Secara *default*, git push tidak mentransfer tag ke *remote servers* seperti
+github/gitlab. Untuk mempush tag, lakukan:
+
+::
+
+	$ git push origin v1.1
+
+untuk mempush semua tag:
+
+::
+
+	$ git push origin --tags
+
+**Delete lokal tag**
+
+::
+
+	$ git tag -d v1.1
+
+**Delete remote tag**
+
+::
+
+	$ git push <remote> :refs/tags/v1.1
+	$ git push origin :refs/tags/v1.1
+
+atau
+
+::
+
+	$ git push origin --delete v1.1
+
+**Checkout tag**
+
+::
+
+	$ git checkout v1.1
+
+**Referensi**
+
+- `Git docs: git basics - tagging`_
+
+
 Multiple Remotes
 ---------------------------------------------------------------------------------
 
@@ -1054,3 +1132,4 @@ Commor Error
 .. _`Using separate SSH keys per host`: https://ricostacruz.com/til/using-separate-ssh-keys-per-host
 .. _`Gitea`: https://gitea.io/en-us/
 .. _`assign gitlab runner`: https://stackoverflow.com/questions/53370840/this-job-is-stuck-because-the-project-doesnt-have-any-runners-online-assigned
+.. _`Git docs: git basics - tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
