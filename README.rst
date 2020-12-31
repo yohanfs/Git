@@ -1107,6 +1107,18 @@ Buatlah file .github/workflows/compile.yml. Isinya sebagai berikut:
 		  name: PDF
 		  path: main.pdf
 
+
+Download Sebuah File dari Github
+---------------------------------------------------------------------------------
+
+Git clone akan mendownload semua files. Untuk mendownload sebuah file, bisa
+menggunakan *command* wget. Url yang digunakan adalah url sebuah file dalam
+kondisi raw. Contoh:
+
+::
+
+	wget https://raw.githubusercontent.com/yohanfs/Git/master/Makefile
+
 Commor Error
 ---------------------------------------------------------------------------------
 
