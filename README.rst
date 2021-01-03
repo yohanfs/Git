@@ -880,7 +880,17 @@ Git Status
 **Fungsi**
 
 ``Git status`` berfungsi untuk menunjukkan status, misalnya sudah commit dan
-push. 
+push.
+
+::
+
+	$ git status
+
+Git Config
+---------------------------------------------------------------------------------
+
+Line Endings
+*********************************************************************************
 
 **Isu**
 
@@ -888,19 +898,28 @@ Apabila git yang dibuat pertama kali di sistem operasi Windows dibuka di sistem
 operasi lain dalam hal ini Linux, maka walaupun data sudah sinkron dengan
 remote, ``git status`` di Linux akan menunjukkan bahwa beberapa file dalam kondisi
 *modified* sehingga harus di-add dan commit. Ini dikarenakan ada isu dengan
-*line endings*. Untuk mengatasi hal tersebut jalankan command berikut di terminal
-linux:
+*line endings*. Untuk mengatasi hal tersebut jalankan command berikut:
+
+**Windows**
 
 ::
 
-	git config --global core.autocrlf true
+	$ git config --global core.autocrlf true
+
+**Linux**
+
+::
+
+	git config --global core.autocrlf input
 
 **Referensi**
 
 - `git status shows all files as modified <https://github.com/microsoft/WSL/issues/184>`_
+- `customizing git - git configuration`_
 
-Git Config
----------------------------------------------------------------------------------
+
+Config File
+*********************************************************************************
 
 *Typical config*:
 
@@ -909,6 +928,7 @@ Git Config
 	[core]
 		repositoryformatversion = 0 
 		filemode = true
+		autocrlf = input
 		bare = false
 		logallrefupdates = true
 	[remote "gitlocal"]
@@ -1145,3 +1165,4 @@ Commor Error
 .. _`Gitea`: https://gitea.io/en-us/
 .. _`assign gitlab runner`: https://stackoverflow.com/questions/53370840/this-job-is-stuck-because-the-project-doesnt-have-any-runners-online-assigned
 .. _`Git docs: git basics - tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
+.. _`customizing git - git configuration`: https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration
