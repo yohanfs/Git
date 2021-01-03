@@ -1,0 +1,6 @@
+[user]
+	name = xxx
+	email = xxx
+[core]
+	autocrlf = input
+	editor = vim
