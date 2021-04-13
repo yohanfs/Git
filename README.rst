@@ -944,6 +944,17 @@ Lokasi config ada di:
 
 	.git/config
 
+Push to Non-Bare Repo    
+*********************************************************************************
+
+Secara default, repo di server adalah berupa *bare* repo. Sedangkan repo di
+client yang digunakan sebagai *working repo* adalah *non-bare* repo. Push hanya
+bisa dilakukan ke *bare* repo. Tetapi, hal ini bisa diubah agar push bisa
+dilakukan ke *non-bare* repo dengan cara:
+
+::
+
+    git config --local receive.denyCurrentBranch updateInstead
 
 Git Tag
 ---------------------------------------------------------------------------------
