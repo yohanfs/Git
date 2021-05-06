@@ -1,0 +1,1147 @@
+#+STARTUP: overview
+
+* GIT
+
+** Getting Started
+
+- Install perangkat lunak
+
+  #+BEGIN_QUOTE
+
+    - [[https://git-scm.com/download/win][git]]
+    - [[https://gitextensions.github.io/][git extensions]]
+  #+END_QUOTE
+
+- Generate SSH Key
+
+#+BEGIN_EXAMPLE
+    $ ssh-keygen -t rsa -C "your_email@youremail.com"
+#+END_EXAMPLE
+
+Secara default, file rsa akan disimpan di =C:\Users\username\.ssh=
+(windows) atau =home/user/.ssh= (ubuntu). Terdapat 2 jenis file rsa,
+yaitu public key dan private key. Public key selanjutnya dikopikan ke
+akun git.
+
+- Pengaturan Identitas
+
+#+BEGIN_EXAMPLE
+    $ git config --global user.name "your name"
+    $ git config --global user.email youremail@domain.com
+#+END_EXAMPLE
+
+- Buatlah file config (tanpa ekstensi) sebagai berikut:
+
+#+BEGIN_EXAMPLE
+    #akun kesatu
+    Host gitlab.com
+            HostName gitlab.com
+            Preferredauthentications publickey
+            User git
+            IdentityFile ~/.ssh/id_rsa_kesatu
+#+END_EXAMPLE
+
+- Bila cara di atas belum sukses, jalankan /command/ berikut:
+
+*Add*
+
+#+BEGIN_EXAMPLE
+    $ eval `ssh-agent -s` ssh-add id_rsa
+#+END_EXAMPLE
+
+*Cek agent*
+
+#+BEGIN_EXAMPLE
+    $ ssh-add -l
+#+END_EXAMPLE
+
+Jika dilihat di =home/user=, maka tree direktori adalah:
+
+#+BEGIN_EXAMPLE
+    | home/user
+    | ├── .ssh
+    | │   ├── config
+    | │   ├── known_hosts
+    | │   ├── id_rsa_kesatu
+    | │   └── id_rsa_kesatu.pub
+#+END_EXAMPLE
+
+- Apabila ada masalah dengan file permission (Ubuntu), jalankan
+  /command/ berikut:
+
+#+BEGIN_EXAMPLE
+    $ chmod 600 id_rsa_kesatu 
+#+END_EXAMPLE
+
+atau
+
+#+BEGIN_EXAMPLE
+    $ chmod 700 ~/.ssh
+    $ chmod 600 ~/.ssh/*
+#+END_EXAMPLE
+
+** Git di WSL
+
+WSL (/windows subsystems for linux/) adalah /environment/ yang berbeda
+dengan Windows. Oleh karena itu git harus diinstall kembali di WSL.
+Langkah-langkahnya seperti penjelasan di =Getting Started=. Ditambah
+dengan file config berikut:
+
+#+BEGIN_EXAMPLE
+    #akun kesatu
+    Host gitlab.com
+            HostName gitlab.com
+            Preferredauthentications publickey
+            User git
+            IdentityFile ~/.ssh/id_rsa_kesatu
+#+END_EXAMPLE
+
+Ketika dicoba untuk mengcloning sebuah repositori, maka akan muncul
+/error/ sebagai berikut:
+
+#+BEGIN_EXAMPLE
+    Bad owner or permissions on /home/user/.ssh/config
+    fatal: could not read from remote repository
+
+    Please make sure you have the correct access rights and the repository
+    exists
+#+END_EXAMPLE
+
+Solusinya adalah dengan cara menjalankan /command/ berikut:
+
+#+BEGIN_EXAMPLE
+    chmod 600 ~/.ssh/config
+#+END_EXAMPLE
+
+*Referensi*
+
+- [[https://serverfault.com/questions/253313/ssh-returns-bad-owner-or-permissions-on-ssh-config][serverfault:
+  ssh returns "Bad owner"]]
+
+** Multiple SSH
+*** Cara 1
+    :PROPERTIES:
+    :CUSTOM_ID: cara-1
+    :END:
+
+Tujuan membuat multiple SSH adalah untuk menggunakan akun git lebih dari
+1 pada sebuah komputer. Sebagai contoh, berikut ini 2 buah SSH key akan
+di-/generate/.
+
+- Buka direktori /SSH key/. Kemudian git-bash di folder tersebut.
+
+#+BEGIN_EXAMPLE
+    C:\Users\username\.ssh
+#+END_EXAMPLE
+
+- /Generate/ SSH key
+
+  #+BEGIN_QUOTE
+
+    - SSH key 1: =ssh-keygen -t rsa -C "your_email@youremail.com"=
+    - SSH key 2: =ssh-keygen -t rsa -C "your_email@youremail.com"=
+  #+END_QUOTE
+
+Beri nama masing-masing key di atas dengan id_rsa_kesatu dan
+id_rsa_kedua
+
+- Buat file config, yang berisi
+
+#+BEGIN_EXAMPLE
+    #akun kesatu
+    Host gitlab
+            HostName gitlab.com
+            User git
+            IdentityFile ~/.ssh/id_rsa_kesatu
+
+    #akun kedua
+    Host github.com
+            HostName github.com
+            User git
+            IdentityFile ~/.ssh/id_rsa_kedua
+
+    #akun ketiga
+    Host github.com-yohan
+            HostName github.com
+            User git
+            IdentityFile ~/.ssh/id_rsa_ketiga
+#+END_EXAMPLE
+
+- /Add/ kedua /key/ tersebut
+
+#+BEGIN_EXAMPLE
+    eval `ssh-agent -s` ssh-add id_rsa_kesatu ssh-add id_rsa_kedua
+#+END_EXAMPLE
+
+- Cek /key/ yang telah tersimpan:
+
+#+BEGIN_EXAMPLE
+    ssh-add -l
+#+END_EXAMPLE
+
+- Bila diperlukan, hapus ssh-agent yang tersimpan sebelumnya, kemudian
+  add kembali
+
+#+BEGIN_EXAMPLE
+    ssh-add -D
+#+END_EXAMPLE
+
+- Masukkan /public key/ ke akun git
+
+Berdasarkan pengalaman, apabila multiple akun tersebut berasal dari host
+yang sama, misalnya dari github, maka ada modifikasi tambahan yang perlu
+dilakukan. Modifikasi tersebut dilakukan pada file config yang bisa
+ditemukan di dalam folder (.git). Folder ini secara default dalam
+kondisi hidden sehingga untuk menampilkan perlu unhidden dulu. Pada file
+config tersebut, url repository perlu disesuaikan dengan hostname.
+Misalnya:
+
+#+BEGIN_EXAMPLE
+    [remote "origin"] url = git@github.com-yohan:yourRepository.git
+#+END_EXAMPLE
+
+Catatan lain perihal config file ini adalah penggunaan tab sebelum kata
+HostName. Tab yang terlalu panjang ternyata menyebabkan config file
+tersebut tidak berjalan (lihat gambar di bawah). Oleh karenanya, contoh
+di atas bisa diikuti agar config tersebut bisa berjalan.
+
+[[file:images/error.png]]
+
+- Cek koneksi ssh
+
+#+BEGIN_EXAMPLE
+    ssh -T git@gitlab.com
+#+END_EXAMPLE
+
+*Referensi*
+
+- [[https://gist.github.com/jexchan/2351996][Multiple SSH Keys settings
+  for different github account]]
+- [[https://stackoverflow.com/questions/17846529/could-not-open-a-connection-to-your-authentication-agent][Could
+  not open a connection to your authentication agent]]
+
+*** Cara 2
+    :PROPERTIES:
+    :CUSTOM_ID: cara-2
+    :END:
+
+Buat file config:
+
+#+BEGIN_EXAMPLE
+    Host *
+      IdentityFile ~/.ssh/keys/%r@%h
+#+END_EXAMPLE
+
+Simpan ssh key di ~/.ssh/keys/ dengan format <user>@<host>. Contoh
+struktur foldernya adalah:
+
+#+BEGIN_EXAMPLE
+    ~/.ssh/keys/
+    |__ git@github.com
+    |__ git@github.com.pub
+#+END_EXAMPLE
+
+*Referensi*
+
+- [[https://ricostacruz.com/til/using-separate-ssh-keys-per-host][Using
+  separate SSH keys per host]]
+
+** Git Path
+
+Supaya git bisa dijalankan di command line di windows, git harus
+disertakan di =System Environment= Windows. Path-nya sebagai berikut:
+
+#+BEGIN_EXAMPLE
+    C:\Program Files\Git\cmd
+#+END_EXAMPLE
+
+** Git Bash
+
+Git Bash merupakan sebuah terminal yang diinstall secara bersamaan
+dengan git. Git bash ini bisa digunakan sebagaimana terminal pada
+umumnya. /Command/-nya juga sama dengan terminal di ubuntu. Salah satu
+fitur yang saya sukai adalah pengaturan =alias= di sistem terminal
+ubuntu yang juga tersedia di Git bash. Alias ini berguna untuk
+menyederhanakan sebuah /command/ menjadi /command/ yang namanya bisa
+diset sesuai dengan keinginan. Misalnya, sebuah /command/: =git status=
+bisa menjadi =gs=. Cara yang perlu dilakukan adalah dengan mengaturnya
+di file yang bernama =.bashrc=. Di Windows, file ini disimpan di :
+=C:\Users\username\.bashrc=.
+
+Contoh penulisan alias:
+
+#+BEGIN_EXAMPLE
+    alias gs='git status'
+#+END_EXAMPLE
+
+Dengan konsep ini, kita juga bisa membuat /command/ untuk menuju folder
+tertentu. Misalnya ingin menuju folder D:libraryyohan, maka aliasnya:
+
+#+BEGIN_EXAMPLE
+    alias lib='cd /d/library/yohan'
+#+END_EXAMPLE
+
+Dengan demikian, /command/ yang panjang dan sering digunakan bisa
+dipermudah dan /working flow/ bisa menjadi lebih cepat.
+
+** Update Git
+
+Sebelum update, cek versi terlebih dahulu di Terminal:
+
+#+BEGIN_EXAMPLE
+    git --version
+#+END_EXAMPLE
+
+Kemudian update dengan cara:
+
+*Windows*
+
+#+BEGIN_EXAMPLE
+    git update-git-for-windows
+#+END_EXAMPLE
+
+*Linux*
+
+#+BEGIN_EXAMPLE
+    sudo add-apt-repository ppa:git-core/ppa -y
+    sudo apt-get update
+    sudo apt-get install git -y
+    git --version
+#+END_EXAMPLE
+
+*Referensi*
+
+- [[https://confluence.atlassian.com/bitbucketserver/installing-and-upgrading-git-776640906.html][Atlassian:
+  installing and upgrading git]]
+- [[https://unix.stackexchange.com/questions/33617/how-can-i-update-to-a-newer-version-of-git-using-apt-get][unix.stackexchange:
+  update git using apt-get]]
+
+** Syntax Dasar Git
+
+Syntax dasar untuk melakukan push dan pull melalui terminal (di windows:
+git bash).
+
+- Push
+
+#+BEGIN_EXAMPLE
+    $ git status
+    $ git add . 
+    $ git commit -m "isi pesan di sini"
+    $ git push origin master
+#+END_EXAMPLE
+
+- Pull
+
+#+BEGIN_EXAMPLE
+    $ git pull origin master
+#+END_EXAMPLE
+
+*Referensi*
+
+- [[https://git-scm.com/docs/gittutorial][git-scm: basic syntax]]
+
+** Membuat Repositori Baru
+
+Ada 2 cara untuk membuat repositori git. Pertama dengan cara cloning
+repositori dari remote. Kedua dengan cara menjadikan eksisting folder
+menjadi git repositori. Untuk kedua langkah tersebut, langkah awalnya
+adalah sama, yaitu membuat /remote repository/. Selanjutnya dapat
+mengikuti langkah-langkah berikut:
+
+- Cloning Repositori
+
+#+BEGIN_EXAMPLE
+    git clone "url git repository" `
+#+END_EXAMPLE
+
+- Existing Folder
+
+#+BEGIN_EXAMPLE
+    git init
+    git remote add origin "url git repository"
+#+END_EXAMPLE
+
+Setelah folder dibuat dan diisi dengan files, maka selanjutnya data
+tersebut bisa disimpan di /remote repository/ dengan cara:
+
+#+BEGIN_EXAMPLE
+    git add . 
+    git commit -m "initial commit"
+    git push -u origin master
+#+END_EXAMPLE
+
+** Mengabaikan File
+
+Terkadang ada files di dalam folder git yang tidak ingin kita /push/ ke
+repositori. Files tersebut memungkinkan di-/ignore/ dengan cara
+mendefinisikan dalam sebuah file dengan ekstensi *.gitignore*.
+
+Sebagai contoh folder yang bernama *tes* ingin diabaikan oleh git maka
+isi dari file *.gitignore* adalah:
+
+#+BEGIN_EXAMPLE
+    # Ignore folder named 'tes'
+    files/tes/
+#+END_EXAMPLE
+
+File *.gitignore* ini bisa ditempatkan di folder mana saja di dalam file
+git. URL folder yang diabaikannya mengunakan URL relative terhadap file
+*.gitignore*.
+
+** Submodule
+
+/Command/ untuk meng-/cloning/ git repository sebagai submodule sebagai
+berikut:
+
+#+BEGIN_EXAMPLE
+    git submodule add [url to git repo]
+    git submodule init
+#+END_EXAMPLE
+
+*Referensi*
+
+- [[https://www.vogella.com/tutorials/GitSubmodules/article.html][Using
+  submodules in Git - Tutorial]]
+
+** Git Branch
+
+Ketika membuat sebuah repositori di git, maka secara default akan
+dibuatkan sebuah repositori yang bernama =master=. Repositori ini
+sebenarnya adalah sebuah branch. Di dalam git, memungkinkan untuk
+mengcloning branch tersebut dengan menggunakan nama branch yang baru.
+Dengan demikian, perubahan yang terjadi di branch yang baru tidak
+langsung mengubah data di =master=.
+
+Setiap commit yang dilakukan disimpan sebagai snapshot data pada commit
+tersebut. Contoh snapshot commit pada branch master adalah sebagai
+berikut:
+
+[[file:images/gitbranch_initial.svg]]
+
+Data tersebut bisa dilihat dengan /command/:
+
+#+BEGIN_EXAMPLE
+    git log --oneline
+#+END_EXAMPLE
+
+Branch master tersebut memiliki 3 buah commit. Commit yang terakhir
+ditandai dengan pointer =head=. Misalnya pada contoh ini, branch yang
+bernama testing dibuat dengan cara:
+
+#+BEGIN_EXAMPLE
+    git branch testing
+#+END_EXAMPLE
+
+Maka akan ada 2 buah branch sebagai berikut:
+
+[[file:images/gitbranch_testing.svg]]
+
+Sampai sini, branch testing hanya ada di lokal komputer.
+
+Untuk bekerja dengan branch =testing=, jalankan /command/ berikut:
+
+#+BEGIN_EXAMPLE
+    git checkout testing
+#+END_EXAMPLE
+
+Maka pointer head akan berpindah ke branch testing.
+
+[[file:images/gitbranch_testing_head.svg]]
+
+Setelah melakukan perubahan di branch testing, kemudian commitlah data
+tersebut dengan cara:
+
+#+BEGIN_EXAMPLE
+    git add .  git commit -m "C3"
+#+END_EXAMPLE
+
+Maka history git sekarang menjadi:
+
+[[file:images/gitbranch_commit.svg]]
+
+Selanjutnya, setelah semua pengembangan di branch testing selesai
+dikerjakan. Datanya bisa digabungkan dengan branch master. Caranya
+adalah dengan memindahkan pointer head ke master terlebih dahulu:
+
+#+BEGIN_EXAMPLE
+    git checkout master
+#+END_EXAMPLE
+
+Kemudian gabungkan dengan =git merge=:
+
+#+BEGIN_EXAMPLE
+    git merge testing
+#+END_EXAMPLE
+
+Maka history git sekarang menjadi:
+
+[[file:images/gitbranch_final.svg]]
+
+Apabila branch testing sudah tidak diperlukan lagi, branch tersebut bisa
+didelete dengan cara:
+
+#+BEGIN_EXAMPLE
+    git branch -d testing
+#+END_EXAMPLE
+
+*Referensi*
+
+- [[https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging][Git
+  branching]]
+
+** Delete Git Branch
+
+Git Branch harus di-delete di lokal dan di remote. Caranya adalah:
+
+- Lokal
+
+#+BEGIN_EXAMPLE
+    git branch -a #to see the list of branches
+    git branch -d repositoryname
+#+END_EXAMPLE
+
+Catatan: Gunakan -D untuk /force delete/.
+
+- Remote
+
+#+BEGIN_EXAMPLE
+    git branch -a #to see the list of branches
+    git push origin --delete repositoryname
+#+END_EXAMPLE
+
+** Git Merge
+
+Ada 2 kondisi untuk merge, /fast-forward merge/ dan /three-way merge/.
+
+*Fast-Forward Merge*
+
+/Fast-forward merge/ terjadi ketika ada path yang linier antar branch
+yang mau di-merge.
+
+*Three-Way Merge*
+
+/Three-way merge/ terjadi ketika path-nya tidak linear. Merge ini akan
+menambahkan commit tambahan untuk menggabungkan 2 branch tersebut.
+
+*References*
+
+- [[https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell][Git
+  Branching - Branches in a Nutshell]]
+- [[https://www.atlassian.com/git/tutorials/merging-vs-rebasing][Atlassian:
+  Merging vs Rebasing]]
+- [[https://git-scm.com/book/en/v2/Git-Branching-Rebasing][git-scm: Git
+  Branching - Rebasing]]
+- [[https://dev.to/neshaz/how-to-use-git-merge-the-correctway-25pd][How
+  to Use git Merge]]
+
+** Undo Last Changes
+*** Undo Last Commit
+    :PROPERTIES:
+    :CUSTOM_ID: undo-last-commit
+    :END:
+
+- /Commit/ terakhir akan dihapus dari Git history
+
+#+BEGIN_EXAMPLE
+    $ git reset --soft HEAD~1
+#+END_EXAMPLE
+
+HEAD~1 artinya adalah me-/reset/ HEAD (/commit/ terakhir).
+
+- Cek log history
+
+#+BEGIN_EXAMPLE
+    $ git log --oneline
+#+END_EXAMPLE
+
+*Referensi*
+
+- [[https://devconnected.com/how-to-undo-last-git-commit/][devconnected:
+  how to undo last git commit]]
+
+*** Discard Unstaged Files
+    :PROPERTIES:
+    :CUSTOM_ID: discard-unstaged-files
+    :END:
+
+#+BEGIN_EXAMPLE
+    git checkout .. -
+#+END_EXAMPLE
+
+*Referensi*
+
+- [[https://stackoverflow.com/questions/52704/how-do-i-discard-unstaged-changes-in-git][stackoverflow:
+  discard unstaged changes]]
+
+** Lokal Git Storage
+*Pengertian Git dan Github/Gitlab*
+
+Berikut ini adalah pengertian Git dan Github/Gitlab berdasarkan
+pemahaman saya.
+
+Git dan github/gitlab adalah /service/ yang berbeda. Git adalah /version
+control software/ yang bekerja di lokal komputer. Sedangkan
+github/gitlab adalah cloud service untuk penyimpanan data Git
+(/server/).
+
+Dengan konsep tersebut, saya kemudian berekperimen untuk menyimpan
+/remote/ data di lokal /server/ dan berhasil dijalankan baik itu di
+Windows, Linux, dan MacOS.
+
+*Tutorial*
+
+Berikut ini adalah tutorialnya:
+
+- create /remote folder/ di /server/, misalnya:
+
+*Ubuntu*
+
+#+BEGIN_EXAMPLE
+    $ /mnt/remoteFiles/tes
+#+END_EXAMPLE
+
+*Windows*
+
+#+BEGIN_EXAMPLE
+    $ /Y/remoteFiles/tes
+#+END_EXAMPLE
+
+*Windows/Ubuntu/MacOS | General path*
+
+#+BEGIN_EXAMPLE
+    $ ssh://username@ipaddress/path/to/remote.git
+#+END_EXAMPLE
+
+Untuk cek path dari metode ssh adalah dengan perintah =$ pwd=.
+
+Semua path di atas dinamakan =/path/to/remote= yang akan digunakan pada
+/syntax/ di penjelasan berikutnya.
+
+- jadikan sebagai git repository
+
+#+BEGIN_EXAMPLE
+    $ git init --bare
+#+END_EXAMPLE
+
+- create lokal repo
+
+#+BEGIN_EXAMPLE
+    $ git init
+    $ git remote add origin /path/to/remote
+#+END_EXAMPLE
+
+Misalnya:
+
+#+BEGIN_EXAMPLE
+    $ git remote add origin /mnt/remoteFiles/tes
+#+END_EXAMPLE
+
+- push to remote
+
+#+BEGIN_EXAMPLE
+    $ git push -u origin master
+#+END_EXAMPLE
+
+- Cloning
+
+#+BEGIN_EXAMPLE
+    $ git clone /path/to/remote
+#+END_EXAMPLE
+
+*Referensi*
+
+- [[https://unixnme.blogspot.com/2016/07/how-to-setup-git-server-on-mac-os-x.html][tutorial
+  from other]]
+
+** Lokal Git Web (Self Hosted)
+*** Gitlab
+    :PROPERTIES:
+    :CUSTOM_ID: gitlab
+    :END:
+
+*Install Gitlab*
+
+Berikut ini adalah cara install Gitlab di Ubuntu 20.04:
+
+- update
+
+#+BEGIN_EXAMPLE
+    $ sudo apt update
+#+END_EXAMPLE
+
+- install dependencies
+
+#+BEGIN_EXAMPLE
+    $ sudo apt-get install -y curl openssh-server ca-certificates
+#+END_EXAMPLE
+
+- jika ingin Gitlab untuk mengirimkan notifikasi email (optional)
+
+#+BEGIN_EXAMPLE
+    $ sudo apt-get install -y postfix
+#+END_EXAMPLE
+
+- install Gitlab CE
+
+#+BEGIN_EXAMPLE
+    $ curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+    $ sudo apt-get install gitlab-ce
+#+END_EXAMPLE
+
+atau /command/ berikut ini jika ingin menggunakan external url
+
+#+BEGIN_EXAMPLE
+    $ sudo EXTERNAL_URL="http://gitlabce.example.com" apt-get install gitlab-ce
+#+END_EXAMPLE
+
+- untuk konfigurasi ulang external_url atau konfigurasi lainnya, editlah
+  file berikut
+
+#+BEGIN_EXAMPLE
+    $ sudo vim /etc/gitlab/gitlab.rb
+#+END_EXAMPLE
+
+- selanjutnya jalankan /command/ berikut
+
+#+BEGIN_EXAMPLE
+    $ sudo gitlab-ctl reconfigure
+    $ gitlab-ctl start
+#+END_EXAMPLE
+
+- akses via web browser
+
+#+BEGIN_EXAMPLE
+    https://your_gitlab_domain_or_server_IP
+#+END_EXAMPLE
+
+- saat pertama kali dijalankan akan diminta untuk membuat password
+- /default username/ adalah *root*.
+
+*Uninstall Gitlab*
+
+#+BEGIN_EXAMPLE
+    $ sudo apt-get remove gitlab-ce
+    $ sudo rm -rf /var/opt/gitlab
+    $ sudo pkill -f gitlab
+    $ sudo rm -rf /opt/gitlab
+    $ sudo rm -rf /etc/gitlab
+    $ sudo rm -rf /var/opt/gitlab
+#+END_EXAMPLE
+
+Kemudian restart komputer.
+
+*Referensi*
+
+- [[https://about.gitlab.com/install/#ubuntu][gitlab.com: install
+  self-managed gitlab]]
+- [[https://medium.com/@thecaffeinedev/how-to-setup-and-configure-your-own-gitlab-server-on-ubuntu-20-04-73214cf63882][medium:
+  install gitlab]]
+- [[https://docs.gitlab.com/omnibus/settings/configuration][konfigurasi
+  gitlab]]
+
+*** Gitea
+    :PROPERTIES:
+    :CUSTOM_ID: gitea
+    :END:
+
+*Install Gitea*
+
+Berikut ini adalah cara install Gitea di Raspberry Pi menggunakan
+docker-compose.yml:
+
+- docker-compose.yml
+
+#+BEGIN_EXAMPLE
+    version: '2'
+    services:
+      web:
+        image: kunde21/gitea-arm
+        container_name: gitea
+        environment:
+          - USER_UID=1000
+          - USER_GID=1000
+          - DB_TYPE=mysql
+          - DB_HOST=db:3306
+          - DB_USER=gitea
+          - DB_PASSWD=<yourpassword>
+        restart: always
+        volumes:
+          - ./data:/data
+        ports:
+          - "80:3000"
+          - "2200:22"
+        depends_on:
+          - db
+      db:
+        image: jsurf/rpi-mariadb
+        restart: always
+        environment:
+          - MYSQL_ROOT_PASSWORD=<yourpassword>
+          - MYSQL_DATABASE=gitea
+          - MYSQL_USER=gitea
+          - MYSQL_PASSWORD=<yourpassword>
+        volumes:
+          - ./db/:/var/lib/mysql    
+#+END_EXAMPLE
+
+- Jalankan docker compose
+
+#+BEGIN_EXAMPLE
+    $ docker-compose up
+#+END_EXAMPLE
+
+- Kemudian buka browser dan isi data yang diminta pada initial page
+- Kemudian buatlah ssh di /client computer/ dan beri nama gitea
+
+#+BEGIN_EXAMPLE
+    $ ssh-keygen
+#+END_EXAMPLE
+
+Kemudian buatlah config dengan isi sebagai berikut:
+
+#+BEGIN_EXAMPLE
+    Host gitea.ysi
+      HostName <IP Address>
+      User git
+      Port 2200
+      IdentityFile ~/.ssh/gitea 
+#+END_EXAMPLE
+
+SSH tersebut dapat dites dengan cara:
+
+#+BEGIN_EXAMPLE
+    $ ssh -T gitea.ysi
+#+END_EXAMPLE
+
+Perlu diperhatikan di sini bahwa ssh menggunakan port 2200 sehingga
+perlu disertakan di dalam config.
+
+*Konfigurasi*
+
+Konfigurasi dapat dilakukan pada file /data/gitea/conf/app.ini.
+
+*Referensi*
+
+- [[https://gitea.io/en-us/][Gitea]]
+
+** Git Fetch vs Git Pull
+
+Syntax
+
+#+BEGIN_EXAMPLE
+    $ git fetch origin 
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+    $ git pull origin master
+#+END_EXAMPLE
+
+Persamaan
+
+#+BEGIN_QUOTE
+  Git fetch and git pull digunakan untuk mengunduh data baru dari
+  /remote repository/.
+#+END_QUOTE
+
+Perbedaan
+
+#+BEGIN_QUOTE
+  Git fetch hanya mengunduh metadata baru dari /remote repository/,
+  tetapi tidak mengintegrasikan data baru ke /working files/.
+
+  Git pull mengunduh semua data dan mengintegrasikan data tersebut ke
+  /remote repository/.
+
+  Dikarenakan Git pull akan mengabungkan (merge) data remote ke lokal,
+  maka /merge conflict/ bisa terjadi. Gunakanlah /git pull/ hanya dengan
+  /clean working copy/. Ini artinya tidak terdapat /local changes/
+  sebelum pull.
+#+END_QUOTE
+
+Referensi
+
+- [[https://gitbetter.substack.com/p/how-to-use-git-fetch-and-git-pull][how
+  to use git fetch and git pull effectively]]
+
+** Git Status
+*Fungsi*
+
+=Git status= berfungsi untuk menunjukkan status, misalnya sudah commit
+dan push.
+
+#+BEGIN_EXAMPLE
+    $ git status
+#+END_EXAMPLE
+
+** Git Config
+*** Line Endings
+    :PROPERTIES:
+    :CUSTOM_ID: line-endings
+    :END:
+
+*Isu*
+
+Apabila git yang dibuat pertama kali di sistem operasi Windows dibuka di
+sistem operasi lain dalam hal ini Linux, maka walaupun data sudah
+sinkron dengan remote, =git status= di Linux akan menunjukkan bahwa
+beberapa file dalam kondisi /modified/ sehingga harus di-add dan commit.
+Ini dikarenakan ada isu dengan /line endings/. Untuk mengatasi hal
+tersebut jalankan command berikut:
+
+*Windows*
+
+#+BEGIN_EXAMPLE
+    $ git config --global core.autocrlf true
+#+END_EXAMPLE
+
+*Linux*
+
+#+BEGIN_EXAMPLE
+    git config --global core.autocrlf input
+#+END_EXAMPLE
+
+*Referensi*
+
+- [[https://github.com/microsoft/WSL/issues/184][git status shows all
+  files as modified]]
+- [[https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration][customizing
+  git - git configuration]]
+
+*** Config File
+    :PROPERTIES:
+    :CUSTOM_ID: config-file
+    :END:
+
+/Typical config/:
+
+#+BEGIN_EXAMPLE
+    [core]
+        repositoryformatversion = 0 
+        filemode = true
+        autocrlf = input
+        bare = false
+        logallrefupdates = true
+    [remote "gitlocal"]
+        url = git@gitlocal.ysi:phd/diss.git
+        fetch = +refs/heads/*:refs/remotes/gitlocal/*
+    [branch "master"]
+        remote = gitlocal
+        merge = refs/heads/master
+#+END_EXAMPLE
+
+Lokasi config ada di:
+
+#+BEGIN_EXAMPLE
+    .git/config
+#+END_EXAMPLE
+
+*** Push to Non-Bare Repo
+    :PROPERTIES:
+    :CUSTOM_ID: push-to-non-bare-repo
+    :END:
+
+Secara default, repo di server adalah berupa /bare/ repo. Sedangkan repo
+di client yang digunakan sebagai /working repo/ adalah /non-bare/ repo.
+Push hanya bisa dilakukan ke /bare/ repo. Tetapi, hal ini bisa diubah
+agar push bisa dilakukan ke /non-bare/ repo dengan cara:
+
+#+BEGIN_EXAMPLE
+    git config --local receive.denyCurrentBranch updateInstead
+#+END_EXAMPLE
+
+** Git Tag
+Tag biasanya digunakan untuk menandai rilis sebuah /software/.
+
+*Menampilkan daftar tag*
+
+#+BEGIN_EXAMPLE
+    $ git tag
+#+END_EXAMPLE
+
+*Membuat tag*
+
+#+BEGIN_EXAMPLE
+    $ git tag -a v1.0 -m "versi ke 1.0"
+#+END_EXAMPLE
+
+-m adalah untuk menambahkan pesan. Apabila tidak ditambahkan pesan, maka
+git akan membuka text editor.
+
+*Tag commit terdahulu*
+
+#+BEGIN_EXAMPLE
+    $ git tag -a v1.1 9fceb02
+#+END_EXAMPLE
+
+=9fceb02= adalah nama commit-nya. Bisa dilihat di:
+
+#+BEGIN_EXAMPLE
+    $ git log --oneline 
+#+END_EXAMPLE
+
+*Push tag ke remote (misalnya: github/gitlab)*
+
+Secara /default/, git push tidak mentransfer tag ke /remote servers/
+seperti github/gitlab. Untuk mempush tag, lakukan:
+
+#+BEGIN_EXAMPLE
+    $ git push origin v1.1
+#+END_EXAMPLE
+
+untuk mempush semua tag:
+
+#+BEGIN_EXAMPLE
+    $ git push origin --tags
+#+END_EXAMPLE
+
+*Delete lokal tag*
+
+#+BEGIN_EXAMPLE
+    $ git tag -d v1.1
+#+END_EXAMPLE
+
+*Delete remote tag*
+
+#+BEGIN_EXAMPLE
+    $ git push <remote> :refs/tags/v1.1
+    $ git push origin :refs/tags/v1.1
+#+END_EXAMPLE
+
+atau
+
+#+BEGIN_EXAMPLE
+    $ git push origin --delete v1.1
+#+END_EXAMPLE
+
+*Checkout tag*
+
+#+BEGIN_EXAMPLE
+    $ git checkout v1.1
+#+END_EXAMPLE
+
+*Referensi*
+
+- [[https://git-scm.com/book/en/v2/Git-Basics-Tagging][Git docs: git
+  basics - tagging]]
+
+** Multiple Remotes
+
+Remote bisa ditambahkan sebanyak yang diinginkan.
+
+Secara default, nama remote biasanya adalah *origin*, sehingga remote
+biasanya ditambahkan dengan /command/ (contoh):
+
+#+BEGIN_EXAMPLE
+    $ git remote add origin git@github.com:username/gitrepo.git
+#+END_EXAMPLE
+
+Nama *origin* hanya boleh satu. Untuk menambahkan remote baru, buatlah
+nama remote dan url repo. Misalnya untuk menambahkan remote yang bernama
+*newremote*, caranya adalah:
+
+#+BEGIN_EXAMPLE
+    $ git remote add newremote git@gitlab.com:username/gitrepo.git
+#+END_EXAMPLE
+
+Oleh dikarenakan ada 2 remote, perlu diperhatikan lagi alamat saat pull
+dan push.
+
+Misalnya untuk pull dari *newremote*:
+
+#+BEGIN_EXAMPLE
+    $ git pull newremote master
+#+END_EXAMPLE
+
+dan untuk push ke *newremote*:
+
+#+BEGIN_EXAMPLE
+    $ git push newremote master
+#+END_EXAMPLE
+
+** Continuous Integration
+
+Continuous Integration (CI) digunakan untuk mencompile secara otomatis
+program yang ada di dalam /repository/.
+
+*** Gitlab CI
+    :PROPERTIES:
+    :CUSTOM_ID: gitlab-ci
+    :END:
+
+*Contoh Gitlab CI*
+
+Cara mengaktifkannya adalah dengan membuat file *.gitlab-ci.yml*.
+
+Berikut ini adalah contoh isi dari *.gitlab-ci.yml*. Isi file tersebut
+untuk mengcompile latex file.
+
+#+BEGIN_EXAMPLE
+    compile_pdf:
+      image: aergus/latex
+      script:
+            - pdflatex main.tex
+      artifacts:
+        paths:
+              - main.pdf
+#+END_EXAMPLE
+
+Isi file tersebut mirip dengan docker-compose.yml. Image yang digunakan
+pun memang berasal dari docker image.
+
+*Install Gitlab Runner*
+
+Agar Gitlab CI dapat dijalankan di self-hosted Gitlab, Gitlab Runner
+harus diinstall.
+
+*Referensi*
+
+- [[https://stackoverflow.com/questions/53370840/this-job-is-stuck-because-the-project-doesnt-have-any-runners-online-assigned][assign
+  gitlab runner]]
+
+*** Github CI
+    :PROPERTIES:
+    :CUSTOM_ID: github-ci
+    :END:
+
+Buatlah file .github/workflows/compile.yml. Isinya sebagai berikut:
+
+#+BEGIN_EXAMPLE
+    name: Build LaTeX Document
+    on:
+      push:
+        paths:
+        - '**.tex'
+    jobs:
+      build_latex:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Set up Git repository
+        uses: actions/checkout@v1
+          - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: main.tex
+          - name: Uplod PDF
+        uses: actions/upload-artifact@v1
+        with:
+          name: PDF
+          path: main.pdf
+#+END_EXAMPLE
+
+** Download Sebuah File dari Github
+
+Git clone akan mendownload semua files. Untuk mendownload sebuah file,
+bisa menggunakan /command/ wget. Url yang digunakan adalah url sebuah
+file dalam kondisi raw. Contoh:
+
+#+BEGIN_EXAMPLE
+    wget https://raw.githubusercontent.com/yohanfs/Git/master/Makefile
+#+END_EXAMPLE
+
+** Commor Error
+
+- [[https://stackoverflow.com/questions/32378984/error-on-git-pull-error-cannot-open-git-fetch-head-permission-denied][Cannotopen .git/FETCH_HEAD: Permission denied]]
+- [[https://stackoverflow.com/questions/44250002/how-to-solve-sign-and-send-pubkey-signing-failed-agent-refused-operation][Sign and send pubkey: signing failed]]
