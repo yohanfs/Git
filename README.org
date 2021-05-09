@@ -5,18 +5,12 @@
 ** Getting Started
 
 - Install perangkat lunak
-
-  #+BEGIN_QUOTE
-
-    - [[https://git-scm.com/download/win][git]]
-    - [[https://gitextensions.github.io/][git extensions]]
-  #+END_QUOTE
+  - [[https://git-scm.com/download/win][git]]
+  - [[https://gitextensions.github.io/][git extensions]]
 
 - Generate SSH Key
 
-#+BEGIN_EXAMPLE
-    $ ssh-keygen -t rsa -C "your_email@youremail.com"
-#+END_EXAMPLE
+: $ ssh-keygen -t rsa -C "your_email@youremail.com"
 
 Secara default, file rsa akan disimpan di =C:\Users\username\.ssh=
 (windows) atau =home/user/.ssh= (ubuntu). Terdapat 2 jenis file rsa,
@@ -25,10 +19,8 @@ akun git.
 
 - Pengaturan Identitas
 
-#+BEGIN_EXAMPLE
-    $ git config --global user.name "your name"
-    $ git config --global user.email youremail@domain.com
-#+END_EXAMPLE
+: $ git config --global user.name "your name"
+: $ git config --global user.email youremail@domain.com
 
 - Buatlah file config (tanpa ekstensi) sebagai berikut:
 
@@ -45,15 +37,11 @@ akun git.
 
 *Add*
 
-#+BEGIN_EXAMPLE
-    $ eval `ssh-agent -s` ssh-add id_rsa
-#+END_EXAMPLE
+: $ eval `ssh-agent -s` ssh-add id_rsa
 
 *Cek agent*
 
-#+BEGIN_EXAMPLE
-    $ ssh-add -l
-#+END_EXAMPLE
+: $ ssh-add -l
 
 Jika dilihat di =home/user=, maka tree direktori adalah:
 
@@ -69,16 +57,12 @@ Jika dilihat di =home/user=, maka tree direktori adalah:
 - Apabila ada masalah dengan file permission (Ubuntu), jalankan
   /command/ berikut:
 
-#+BEGIN_EXAMPLE
-    $ chmod 600 id_rsa_kesatu 
-#+END_EXAMPLE
+: $ chmod 600 id_rsa_kesatu 
 
 atau
 
-#+BEGIN_EXAMPLE
-    $ chmod 700 ~/.ssh
-    $ chmod 600 ~/.ssh/*
-#+END_EXAMPLE
+: $ chmod 700 ~/.ssh
+: $ chmod 600 ~/.ssh/*
 
 ** Git di WSL
 
@@ -120,9 +104,6 @@ Solusinya adalah dengan cara menjalankan /command/ berikut:
 
 ** Multiple SSH
 *** Cara 1
-    :PROPERTIES:
-    :CUSTOM_ID: cara-1
-    :END:
 
 Tujuan membuat multiple SSH adalah untuk menggunakan akun git lebih dari
 1 pada sebuah komputer. Sebagai contoh, berikut ini 2 buah SSH key akan
@@ -221,9 +202,6 @@ di atas bisa diikuti agar config tersebut bisa berjalan.
   not open a connection to your authentication agent]]
 
 *** Cara 2
-    :PROPERTIES:
-    :CUSTOM_ID: cara-2
-    :END:
 
 Buat file config:
 
@@ -246,7 +224,7 @@ struktur foldernya adalah:
 - [[https://ricostacruz.com/til/using-separate-ssh-keys-per-host][Using
   separate SSH keys per host]]
 
-** Git Path
+** Git Path di Windows
 
 Supaya git bisa dijalankan di command line di windows, git harus
 disertakan di =System Environment= Windows. Path-nya sebagai berikut:
@@ -400,8 +378,7 @@ berikut:
 
 *Referensi*
 
-- [[https://www.vogella.com/tutorials/GitSubmodules/article.html][Using
-  submodules in Git - Tutorial]]
+- [[https://www.vogella.com/tutorials/GitSubmodules/article.html][Using submodules in Git - Tutorial]]
 
 ** Git Branch
 
@@ -486,8 +463,7 @@ didelete dengan cara:
 
 *Referensi*
 
-- [[https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging][Git
-  branching]]
+- [[https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging][Git branching]]
 
 ** Delete Git Branch
 
@@ -525,20 +501,13 @@ menambahkan commit tambahan untuk menggabungkan 2 branch tersebut.
 
 *References*
 
-- [[https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell][Git
-  Branching - Branches in a Nutshell]]
-- [[https://www.atlassian.com/git/tutorials/merging-vs-rebasing][Atlassian:
-  Merging vs Rebasing]]
-- [[https://git-scm.com/book/en/v2/Git-Branching-Rebasing][git-scm: Git
-  Branching - Rebasing]]
-- [[https://dev.to/neshaz/how-to-use-git-merge-the-correctway-25pd][How
-  to Use git Merge]]
+- [[https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell][Git Branching - Branches in a Nutshell]]
+- [[https://www.atlassian.com/git/tutorials/merging-vs-rebasing][Atlassian: Merging vs Rebasing]]
+- [[https://git-scm.com/book/en/v2/Git-Branching-Rebasing][git-scm: Git Branching - Rebasing]]
+- [[https://dev.to/neshaz/how-to-use-git-merge-the-correctway-25pd][How to Use git Merge]]
 
 ** Undo Last Changes
 *** Undo Last Commit
-    :PROPERTIES:
-    :CUSTOM_ID: undo-last-commit
-    :END:
 
 - /Commit/ terakhir akan dihapus dari Git history
 
@@ -560,12 +529,9 @@ HEAD~1 artinya adalah me-/reset/ HEAD (/commit/ terakhir).
   how to undo last git commit]]
 
 *** Discard Unstaged Files
-    :PROPERTIES:
-    :CUSTOM_ID: discard-unstaged-files
-    :END:
 
 #+BEGIN_EXAMPLE
-    git checkout .. -
+    git checkout -- .
 #+END_EXAMPLE
 
 *Referensi*
@@ -655,9 +621,6 @@ Misalnya:
 
 ** Lokal Git Web (Self Hosted)
 *** Gitlab
-    :PROPERTIES:
-    :CUSTOM_ID: gitlab
-    :END:
 
 *Install Gitlab*
 
@@ -735,17 +698,11 @@ Kemudian restart komputer.
 
 *Referensi*
 
-- [[https://about.gitlab.com/install/#ubuntu][gitlab.com: install
-  self-managed gitlab]]
-- [[https://medium.com/@thecaffeinedev/how-to-setup-and-configure-your-own-gitlab-server-on-ubuntu-20-04-73214cf63882][medium:
-  install gitlab]]
-- [[https://docs.gitlab.com/omnibus/settings/configuration][konfigurasi
-  gitlab]]
+- [[https://about.gitlab.com/install/#ubuntu][gitlab.com: install self-managed gitlab]]
+- [[https://medium.com/@thecaffeinedev/how-to-setup-and-configure-your-own-gitlab-server-on-ubuntu-20-04-73214cf63882][medium: install gitlab]]
+- [[https://docs.gitlab.com/omnibus/settings/configuration][konfigurasi gitlab]]
 
 *** Gitea
-    :PROPERTIES:
-    :CUSTOM_ID: gitea
-    :END:
 
 *Install Gitea*
 
@@ -863,8 +820,7 @@ Perbedaan
 
 Referensi
 
-- [[https://gitbetter.substack.com/p/how-to-use-git-fetch-and-git-pull][how
-  to use git fetch and git pull effectively]]
+- [[https://gitbetter.substack.com/p/how-to-use-git-fetch-and-git-pull][how to use git fetch and git pull effectively]]
 
 ** Git Status
 *Fungsi*
@@ -878,9 +834,6 @@ dan push.
 
 ** Git Config
 *** Line Endings
-    :PROPERTIES:
-    :CUSTOM_ID: line-endings
-    :END:
 
 *Isu*
 
@@ -905,15 +858,10 @@ tersebut jalankan command berikut:
 
 *Referensi*
 
-- [[https://github.com/microsoft/WSL/issues/184][git status shows all
-  files as modified]]
-- [[https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration][customizing
-  git - git configuration]]
+- [[https://github.com/microsoft/WSL/issues/184][git status shows all files as modified]]
+- [[https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration][customizing git - git configuration]]
 
 *** Config File
-    :PROPERTIES:
-    :CUSTOM_ID: config-file
-    :END:
 
 /Typical config/:
 
@@ -939,9 +887,6 @@ Lokasi config ada di:
 #+END_EXAMPLE
 
 *** Push to Non-Bare Repo
-    :PROPERTIES:
-    :CUSTOM_ID: push-to-non-bare-repo
-    :END:
 
 Secara default, repo di server adalah berupa /bare/ repo. Sedangkan repo
 di client yang digunakan sebagai /working repo/ adalah /non-bare/ repo.
@@ -1024,9 +969,8 @@ atau
 
 *Referensi*
 
-- [[https://git-scm.com/book/en/v2/Git-Basics-Tagging][Git docs: git
-  basics - tagging]]
-
+- [[https://git-scm.com/book/en/v2/Git-Basics-Tagging][Git docs: git basics - tagging]]
+  
 ** Multiple Remotes
 
 Remote bisa ditambahkan sebanyak yang diinginkan.
@@ -1067,9 +1011,6 @@ Continuous Integration (CI) digunakan untuk mencompile secara otomatis
 program yang ada di dalam /repository/.
 
 *** Gitlab CI
-    :PROPERTIES:
-    :CUSTOM_ID: gitlab-ci
-    :END:
 
 *Contoh Gitlab CI*
 
@@ -1098,13 +1039,9 @@ harus diinstall.
 
 *Referensi*
 
-- [[https://stackoverflow.com/questions/53370840/this-job-is-stuck-because-the-project-doesnt-have-any-runners-online-assigned][assign
-  gitlab runner]]
+- [[https://stackoverflow.com/questions/53370840/this-job-is-stuck-because-the-project-doesnt-have-any-runners-online-assigned][assign gitlab runner]]
 
 *** Github CI
-    :PROPERTIES:
-    :CUSTOM_ID: github-ci
-    :END:
 
 Buatlah file .github/workflows/compile.yml. Isinya sebagai berikut:
 
@@ -1130,6 +1067,22 @@ Buatlah file .github/workflows/compile.yml. Isinya sebagai berikut:
           name: PDF
           path: main.pdf
 #+END_EXAMPLE
+
+** Clear History
+
+- remove the history from
+
+: rm -rf .git
+
+- recreate the repos from the current content only
+
+: git init
+: git add .
+: git commit -m "initial"
+
+- push to repo
+
+: git push -u --force origin master  
 
 ** Download Sebuah File dari Github
 
