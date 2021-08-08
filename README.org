@@ -1,8 +1,7 @@
 #+STARTUP: overview
+#+TITLE: Git
 
-* GIT
-
-** Getting Started
+* Getting Started
 
 - Install perangkat lunak
   - [[https://git-scm.com/download/win][git]]
@@ -64,7 +63,7 @@ atau
 : $ chmod 700 ~/.ssh
 : $ chmod 600 ~/.ssh/*
 
-** Git di WSL
+* Git di WSL
 
 WSL (/windows subsystems for linux/) adalah /environment/ yang berbeda
 dengan Windows. Oleh karena itu git harus diinstall kembali di WSL.
@@ -102,8 +101,8 @@ Solusinya adalah dengan cara menjalankan /command/ berikut:
 - [[https://serverfault.com/questions/253313/ssh-returns-bad-owner-or-permissions-on-ssh-config][serverfault:
   ssh returns "Bad owner"]]
 
-** Multiple SSH
-*** Cara 1
+* Multiple SSH
+** Cara 1
 
 Tujuan membuat multiple SSH adalah untuk menggunakan akun git lebih dari
 1 pada sebuah komputer. Sebagai contoh, berikut ini 2 buah SSH key akan
@@ -201,7 +200,7 @@ di atas bisa diikuti agar config tersebut bisa berjalan.
 - [[https://stackoverflow.com/questions/17846529/could-not-open-a-connection-to-your-authentication-agent][Could
   not open a connection to your authentication agent]]
 
-*** Cara 2
+** Cara 2
 
 Buat file config:
 
@@ -224,7 +223,7 @@ struktur foldernya adalah:
 - [[https://ricostacruz.com/til/using-separate-ssh-keys-per-host][Using
   separate SSH keys per host]]
 
-** Git Path di Windows
+* Git Path di Windows
 
 Supaya git bisa dijalankan di command line di windows, git harus
 disertakan di =System Environment= Windows. Path-nya sebagai berikut:
@@ -233,7 +232,7 @@ disertakan di =System Environment= Windows. Path-nya sebagai berikut:
     C:\Program Files\Git\cmd
 #+END_EXAMPLE
 
-** Git Bash
+* Git Bash
 
 Git Bash merupakan sebuah terminal yang diinstall secara bersamaan
 dengan git. Git bash ini bisa digunakan sebagaimana terminal pada
@@ -262,7 +261,7 @@ tertentu. Misalnya ingin menuju folder D:libraryyohan, maka aliasnya:
 Dengan demikian, /command/ yang panjang dan sering digunakan bisa
 dipermudah dan /working flow/ bisa menjadi lebih cepat.
 
-** Update Git
+* Update Git
 
 Sebelum update, cek versi terlebih dahulu di Terminal:
 
@@ -294,7 +293,7 @@ Kemudian update dengan cara:
 - [[https://unix.stackexchange.com/questions/33617/how-can-i-update-to-a-newer-version-of-git-using-apt-get][unix.stackexchange:
   update git using apt-get]]
 
-** Syntax Dasar Git
+* Syntax Dasar Git
 
 Syntax dasar untuk melakukan push dan pull melalui terminal (di windows:
 git bash).
@@ -318,7 +317,7 @@ git bash).
 
 - [[https://git-scm.com/docs/gittutorial][git-scm: basic syntax]]
 
-** Membuat Repositori Baru
+* Membuat Repositori Baru
 
 Ada 2 cara untuk membuat repositori git. Pertama dengan cara cloning
 repositori dari remote. Kedua dengan cara menjadikan eksisting folder
@@ -348,7 +347,7 @@ tersebut bisa disimpan di /remote repository/ dengan cara:
     git push -u origin master
 #+END_EXAMPLE
 
-** Mengabaikan File
+* Mengabaikan File
 
 Terkadang ada files di dalam folder git yang tidak ingin kita /push/ ke
 repositori. Files tersebut memungkinkan di-/ignore/ dengan cara
@@ -366,7 +365,7 @@ File *.gitignore* ini bisa ditempatkan di folder mana saja di dalam file
 git. URL folder yang diabaikannya mengunakan URL relative terhadap file
 *.gitignore*.
 
-** Submodule
+* Submodule
 
 /Command/ untuk meng-/cloning/ git repository sebagai submodule sebagai
 berikut:
@@ -380,7 +379,7 @@ berikut:
 
 - [[https://www.vogella.com/tutorials/GitSubmodules/article.html][Using submodules in Git - Tutorial]]
 
-** Git Branch
+* Git Branch
 
 Ketika membuat sebuah repositori di git, maka secara default akan
 dibuatkan sebuah repositori yang bernama =master=. Repositori ini
@@ -465,7 +464,7 @@ didelete dengan cara:
 
 - [[https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging][Git branching]]
 
-** Delete Git Branch
+* Delete Git Branch
 
 Git Branch harus di-delete di lokal dan di remote. Caranya adalah:
 
@@ -485,7 +484,7 @@ Catatan: Gunakan -D untuk /force delete/.
     git push origin --delete repositoryname
 #+END_EXAMPLE
 
-** Git Merge
+* Git Merge
 
 Ada 2 kondisi untuk merge, /fast-forward merge/ dan /three-way merge/.
 
@@ -506,8 +505,8 @@ menambahkan commit tambahan untuk menggabungkan 2 branch tersebut.
 - [[https://git-scm.com/book/en/v2/Git-Branching-Rebasing][git-scm: Git Branching - Rebasing]]
 - [[https://dev.to/neshaz/how-to-use-git-merge-the-correctway-25pd][How to Use git Merge]]
 
-** Undo Last Changes
-*** Undo Last Commit
+* Undo Last Changes
+** Undo Last Commit
 
 - /Commit/ terakhir akan dihapus dari Git history
 
@@ -528,7 +527,7 @@ HEAD~1 artinya adalah me-/reset/ HEAD (/commit/ terakhir).
 - [[https://devconnected.com/how-to-undo-last-git-commit/][devconnected:
   how to undo last git commit]]
 
-*** Discard Unstaged Files
+** Discard Unstaged Files
 
 #+BEGIN_EXAMPLE
     git checkout -- .
@@ -539,7 +538,7 @@ HEAD~1 artinya adalah me-/reset/ HEAD (/commit/ terakhir).
 - [[https://stackoverflow.com/questions/52704/how-do-i-discard-unstaged-changes-in-git][stackoverflow:
   discard unstaged changes]]
 
-** Lokal Git Storage
+* Lokal Git Storage
 *Pengertian Git dan Github/Gitlab*
 
 Berikut ini adalah pengertian Git dan Github/Gitlab berdasarkan
@@ -619,8 +618,8 @@ Misalnya:
 - [[https://unixnme.blogspot.com/2016/07/how-to-setup-git-server-on-mac-os-x.html][tutorial
   from other]]
 
-** Lokal Git Web (Self Hosted)
-*** Gitlab
+* Lokal Git Web (Self Hosted)
+** Gitlab
 
 *Install Gitlab*
 
@@ -702,7 +701,7 @@ Kemudian restart komputer.
 - [[https://medium.com/@thecaffeinedev/how-to-setup-and-configure-your-own-gitlab-server-on-ubuntu-20-04-73214cf63882][medium: install gitlab]]
 - [[https://docs.gitlab.com/omnibus/settings/configuration][konfigurasi gitlab]]
 
-*** Gitea
+** Gitea
 
 *Install Gitea*
 
@@ -784,7 +783,7 @@ Konfigurasi dapat dilakukan pada file /data/gitea/conf/app.ini.
 
 - [[https://gitea.io/en-us/][Gitea]]
 
-** Git Fetch vs Git Pull
+* Git Fetch vs Git Pull
 
 Syntax
 
@@ -822,7 +821,7 @@ Referensi
 
 - [[https://gitbetter.substack.com/p/how-to-use-git-fetch-and-git-pull][how to use git fetch and git pull effectively]]
 
-** Git Status
+* Git Status
 *Fungsi*
 
 =Git status= berfungsi untuk menunjukkan status, misalnya sudah commit
@@ -832,8 +831,8 @@ dan push.
     $ git status
 #+END_EXAMPLE
 
-** Git Config
-*** Line Endings
+* Git Config
+** Line Endings
 
 *Isu*
 
@@ -861,7 +860,7 @@ tersebut jalankan command berikut:
 - [[https://github.com/microsoft/WSL/issues/184][git status shows all files as modified]]
 - [[https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration][customizing git - git configuration]]
 
-*** Config File
+** Config File
 
 /Typical config/:
 
@@ -886,7 +885,7 @@ Lokasi config ada di:
     .git/config
 #+END_EXAMPLE
 
-*** Push to Non-Bare Repo
+** Push to Non-Bare Repo
 
 Secara default, repo di server adalah berupa /bare/ repo. Sedangkan repo
 di client yang digunakan sebagai /working repo/ adalah /non-bare/ repo.
@@ -897,7 +896,7 @@ agar push bisa dilakukan ke /non-bare/ repo dengan cara:
     git config --local receive.denyCurrentBranch updateInstead
 #+END_EXAMPLE
 
-** Git Tag
+* Git Tag
 Tag biasanya digunakan untuk menandai rilis sebuah /software/.
 
 *Menampilkan daftar tag*
@@ -971,7 +970,7 @@ atau
 
 - [[https://git-scm.com/book/en/v2/Git-Basics-Tagging][Git docs: git basics - tagging]]
   
-** Multiple Remotes
+* Multiple Remotes
 
 Remote bisa ditambahkan sebanyak yang diinginkan.
 
@@ -1005,12 +1004,12 @@ dan untuk push ke *newremote*:
     $ git push newremote master
 #+END_EXAMPLE
 
-** Continuous Integration
+* Continuous Integration
 
 Continuous Integration (CI) digunakan untuk mencompile secara otomatis
 program yang ada di dalam /repository/.
 
-*** Gitlab CI
+** Gitlab CI
 
 *Contoh Gitlab CI*
 
@@ -1041,7 +1040,7 @@ harus diinstall.
 
 - [[https://stackoverflow.com/questions/53370840/this-job-is-stuck-because-the-project-doesnt-have-any-runners-online-assigned][assign gitlab runner]]
 
-*** Github CI
+** Github CI
 
 Buatlah file .github/workflows/compile.yml. Isinya sebagai berikut:
 
@@ -1068,7 +1067,7 @@ Buatlah file .github/workflows/compile.yml. Isinya sebagai berikut:
           path: main.pdf
 #+END_EXAMPLE
 
-** Clear History
+* Clear History
 
 - remove the history from
 
@@ -1084,7 +1083,7 @@ Buatlah file .github/workflows/compile.yml. Isinya sebagai berikut:
 
 : git push -u --force origin master  
 
-** Download Sebuah File dari Github
+* Download Sebuah File dari Github
 
 Git clone akan mendownload semua files. Untuk mendownload sebuah file,
 bisa menggunakan /command/ wget. Url yang digunakan adalah url sebuah
@@ -1094,7 +1093,7 @@ file dalam kondisi raw. Contoh:
     wget https://raw.githubusercontent.com/yohanfs/Git/master/Makefile
 #+END_EXAMPLE
 
-** Commor Error
+* Common Error
 
 - [[https://stackoverflow.com/questions/32378984/error-on-git-pull-error-cannot-open-git-fetch-head-permission-denied][Cannotopen .git/FETCH_HEAD: Permission denied]]
 - [[https://stackoverflow.com/questions/44250002/how-to-solve-sign-and-send-pubkey-signing-failed-agent-refused-operation][Sign and send pubkey: signing failed]]
